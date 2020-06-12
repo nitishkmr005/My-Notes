@@ -1,0 +1,140 @@
+########################################################################################################################
+
+											Model Deployment
+
+########################################################################################################################
+
+Docker ID - 
+
+nitishkmr007
+nitishkmr007005@gmail.com 
+NIT$$0481
+
+Pickling and Docker  
+----------------------
+Persisting model on to the desk 
+Library => Pickle, joblib 
+c-pickle => Written in C 
+
+pickle.dump => Model written in binary mode
+pickle.load => To consume the model from dumped 
+
+joblib.dump
+joblib.load 
+
+Along with model we need to save scaling/onehotencoder tranform (As we need to store mean,standard deviation which we got from training => This one we can use for test data) 
+File that is created in linux will not work in windows (i.e. server/OS dependacies) 
+That is why we use Docker => No dependacy on OS/Server => Coexistence of multiple version of python => Docker good for reproducibility purpose 
+
+ML QA => In QA testing 
+Model can be saved in xml 
+
+In Production 
+--------------
+Read incoming data, create dataframe, repeat all transfromations done in training data 
+load the model, Score the model 
+Productionalise => Batch script can be scheduled to run using CRON
+To run the model in real time => Model needs to be exposed as api => We use Flask framework  
+
+Running model in server side using client request
+---------------------------------------------------
+Flask install, Request Library, jsonify library => These needs to be installed in Anaconda 
+
+Server Initiation => python server.py 
+Client Initiation => python client.py => Send data from client to server in json format to get predict 
+Server code => Executed once it gets json request from client 
+port number 
+For excel, Batch mode (Python scripts) can be used instead of Flask 
+
+Multiple requests from different clients => Queue the request or replicate the models 
+
+Kubernetics 
+-------------
+Kubernetics => This creates multiple models by picking docker file 
+Export Docker to Google cloud 
+
+No need of productionalizing unsupervised algorithms 
+
+########################################################################################################################
+
+												Recalibration 
+
+########################################################################################################################
+
+Model Recalibration done every year to check if it is performing same as before 
+Find the dip in performance => Then do recalibration.
+
+CRM Systems => Agrees for model prediction or not 
+Updatable Classifiers/Incremental classifiers => Based new incoming data it continuously updates data 
+
+########################################################################################################################
+
+											Heroku Model Deployment 
+
+########################################################################################################################
+
+https://myfirst-mlmodel.herokuapp.com/
+
+Heroku - Qwerty$$0481
+
+Checking deployment issues using heroku login 
+
+>> heroku login 
+Enter 
+>> heroku logs --app myfirst-mlmodel
+
+########################################################################################################################
+
+											AWS EC2 Instance Deployment 
+
+########################################################################################################################
+
+Root User - 
+
+Nitishkmr007005@gmail.com 
+NIT))%0051
+
+IAM User - 
+
+Alias - nitish007-aws 
+https://nitish007-aws.signin.aws.amazon.com/console
+NIT))%00515
+
+AWS - 
+Create EC2 Intance 
+Actions > Connect 
+Public DNS:
+ec2-3-19-222-126.us-east-2.compute.amazonaws.com
+
+PuTTYgen - 
+Load > select pem file and save private key (ppk). 
+
+WinSCP Software - 
+Login > New Site > Host name - ec2-3-19-222-126.us-east-2.compute.amazonaws.com
+Username - ubuntu 
+Advanced > select ppk file 
+
+PuTTY - 
+Host - ec2-3-19-222-126.us-east-2.compute.amazonaws.com
+SSH > select ppk file 
+>> login as: ubuntu 
+>> pwd  => /home/ubuntu 
+>> ls
+>> pip3 install pandas => This will not work as pip3 is not found => pip is not updated 
+>> sudo apt-get update && sudo apt-get install python3-pip 
+
+AWS - 
+Security Groups > Create Security Group > FullAccess with add rule as Type - All traffic and Source - Anywhere options > Create 
+To link this secuiry group with EC2 instance 
+Network Interfaces > Action > Change Security Groups > Select secuiry group which was created 
+Gave permission for all users to access 
+
+Change app.py - 
+if __name__ == "__main__":
+    app.run(host='0.0.0.0',port=8080)
+	
+PuTTY - 
+>> pip3 install -r requirements.txt => to install all packages related to python code 
+>> python3 app.py 
+
+http://ec2-3-19-222-126.us-east-2.compute.amazonaws.com:8080/

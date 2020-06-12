@@ -1,0 +1,109 @@
+########################################################################################################################
+
+											Hyperparameter tuning 
+
+########################################################################################################################
+
+Data Leak
+-----------
+Validation data should be used to tune the hyperparameter not test data. Test data should be used only at final stage.
+If we use test data to tune the hyperparameters to get desired accuarcy then it is called data leak (similar to question paper leak in exam). 
+
+Hyperparameters - 
+------------------
+To get a list of hyperparameters for algorithm 
+ex- svc.get_params()
+
+Not all hyperparameters are not equally important.
+
+GRIDSearch CV
+--------------
+It takes all combinations 
+
+Random Forest - 
+n_estimator[1,2,3,4], max_depth (it can be equal to number of features)[2,4,10], depth of the tree [2,4,10]
+36 combinations of models 
+
+Take all 36 combinations and get accuarcy of model for each combination => GRID Search CV(Cross Validation) 
+
+Random Search CV
+-----------------
+Out of all 36 combination, it picks up random combinations 
+Reduces time to build the model 
+Lasso/Ridge - 
+m and c are model parameters
+Lambda is hyperparameter
+
+Here Lambda is continuous hyperparameter. In these scenario we use randomsearchCV not GRIDSearchCV (Here we need to define range of various attributes).
+Even Cost function hyperparameter attribute is also continuous variable. 
+Instead of providing a descrete set of values, we provide a statistical distribution.
+Values for the different hyperparameters are picked up at random from this combine distribution.
+n-iter decides number of samples from the hyperparameters distribution as sample(Sampling with replacement is used).
+
+Default CV=3 
+
+K Fold Cross Validation 
+-------------------------
+Amount of training data is more 
+
+Training and testing split => What is the chance of not picking difficult data 
+Class imbalance => SMOTE is done only after train test split (SMOTE is done on training data) 
+
+If True is set as KFold(5,True) it means shuffling to be done before KFold is done.We cannot have K>number of datapoints
+If K=number of datapoints then this is called as Leave One Out Cross Validation or LOOCV
+
+Stratification 
+----------------
++ve and -ve samples should be there 
+
+Replacement for training test split => Use of K-Fold CV 
+
+1 Test  => This fold will have 10 random records 
+2 train from 2 to 10 and delete the model 
+3
+4
+5
+.
+10
+Last iteration we will train whole data (11th Iteration) 
+
+M1 trained on 90% of data 
+M11 trained on 100% of data => M11 is better than M1 to M10 => Since no test data so no accuracy 
+After M11 there is no need of testing 
+
+Merits of K-fold - 
+--------------------
+Different kind of test data (easy/difficult) is used, 
+no need to worry about class imbalance
+
+Stratified 10-Fold CV 
+-----------------------
+It will ensure every part will have good and bad customer by checking cardinality of target column 
+
+Gold Standard 
+---------------
+It is Stratified 10-Fold CV repeated 10 times (Since each fold will have random records, every time each fold will change) 
+
+Combining both GRID Search and K-Fold 
+-------------------------------------------
+Build various combinations of hyperparameters 
+Apply K-Fold on all combinations and calculate average score.
+
+bootstrap(with replacement and without replacement), max_features, n_estimators for Random Forest 
+n_jobs=-1 => All the cores of the machine 
+
+grid.best_index => What is the index of best hyperparameters combination 
+grid.cv_results => it is dictionary for K folds with each fold having first,second,...hyperparameter combination accuracy (Under test score) 
+grid.predict 
+
+Random Search uses n_iter (if not defined it takes 10 by default)
+
+# Refer randomforest_gridsearch.ipynb
+
+LOOCV
+-------
+
+Number of folds = Number records 
+Number of iterations = Number of folds 
+
+Minimal difference between models created in successive iterations => Less Bias error, but model performance will fluctuate in test environment

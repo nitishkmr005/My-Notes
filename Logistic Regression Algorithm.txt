@@ -1,0 +1,59 @@
+Logistic Regression 
+---------------------
+
+Probability of belonging to positive class 
+
++ve => Obese  P = 1    Blue points 
+-ve => Non Obese P = 0 Red points 
+
+Sigmoid Curve 
+
+Equating sigmoid to best fit straight line log(odds) => log (p/1-p)  => Probability to log(odds) which is straight line 
+Cant calculate SSE for infinity value => cant fit best straight line 
+
+Converting log(odds) into prodability 
+
+p=e^(log(odds)/(1+e^(log(odds)) ==> Log(odds) to probability => Sigmoid curve 
+log(odds) => y dimension from straight line 
+
+The best fitting line is the one which maximises likelyhood ==> try with all lines and select the line which gives high P(obese)  
+Maximum Likelyhood => Multiplication of all the probabilities (for -ve (1-p)) => Should be max
+
+For all numeric features do the same thing and add at the end 
+
+predict.prob => Gives probability
+
+Multiclass classification - 
+------------------------------
+1 versus all 
+=> 1,2,3 => First logistic between 1 and (2,3) Second Logistic for (2,3) between 2 and 3 => Here combined probability is one
+
+Multilabel Classification - 
+------------------------------
+Comedy, thriller, Horror => Give it to logistic with comedy and others, Give it to logistic with thriller and others, Give it to logistic with horror and others. 
+4 different models and 4 different outputs => Run them in parallel => If P(Comedy)>=0.5 then its Comedy => Here combined probability is not one
+
+Anomaly detection 
+-------------------
+If we dont have many negative class data we use Anomaly detection to create one else training will have only positive class 
+More good data > bad data ==> Class Imbalance Ex - Credit card fraud => Such scenarios use Anomaly detection 
+To identify outliers 
+
+Birth gene, geneticall modified gene 
+predict obese mouse 
+
+2 obese, 9 non obese => Log(odds) = log(2/9) for normal gene 
+7 obese, 3 non obese => log(odds) = log(7/3) - log(2/9) for muted gene 
+
+It assumes every feature has linear relationship with target 
+Decision boudary changes depending on application critical (not always 0.5) 
+We use confusion matrix since accuracy has loopholes
+
+######################################################################################################################################
+
+Logloss Function 
+-------------------
+
+For incorrect classification logloss will be very high but correct classification it will be very less. 
+Algorithm tries to find best fit sigmoid curve which will minimises logloss function by adjusting weights of independant variables.
+

@@ -1,0 +1,94 @@
+Summarization of ML
+--------------------
+
+Gathering Data 
+----------------
+
+- Primary 
+- Secondary 
+
+Qualitative Data   => Conts(Ratio and Interval) and Discrete(Nominal,Ordinal,Binary(Symmetric,Assymetric))
+Quantitative Data  => Text,Audio,Video,Image 
+
+NLP - 
+-------
+Bag of Words approach
+word2vector 
+
+BOW abd DTM
+-------------
+
+Movie Description 
+1     T1 T2 T3 T4....T (Document term of Matrix)  
+2
+3
+4
+
+CountVectorizer 
+TF_idfVectorizer
+
+Clean Data - 
+FFILL(Forward Fill),BFILL(Backward Fill) used for imputing missing data in case of time series data 
+
+Outliers 
+---------
+Univariate - Boxplot,z-score
+Bivariate - Scattering
+Multivariate - Clustering,Residual Analysis 
+
+Decision - Retain,Imputer,Remove 
+
+- Residual Analysis to detect outliers (Supervised Learning) - Get column of residual i.e.distance between actual and predicted (Plot box plot of this to detect outliers) - Coor's  distance
+- Density based clustering (DBSCAN) helps in detecting outliers 
+
+Biased Outliers (Manual error) - Impute them 
+Actual records - Clustering and build two models 
+Outliers due to data entry error/random chance 
+
+Transformation - 
+-----------------
+
+Statistical - 
+
+Memory: Scaling,Minmax
+Model: PCA,
+
+Non Statistical: Qual(NLP,IMage), Discrete to Continuous(Label Encoder,OneHotEncoder), Continuous to Discrete(Binning) 
+Binning helps for non linear data and then apply linear regression 
+
+Feature Transformation : Polynomial
+
+Visualization - 
+----------------
+Any visualiztion used for - 
+
+Measure of central tendancy 
+Measure of dispersion 
+
+Data Modeling - 
+-----------------
+- Descriptive Modeling 
+- Inferential Modeling - Study of population parameters(Mean of population) by observing sample data - All statistics test (Parametric Test and Non parametric test) 
+
+Parametric - 1&2 sample t-test,z-test,Annova,Manova,n-way ANOVA,ANCOVA,MANCOVA
+Non parametric - Wilcoxon–Mann–Whitney
+
+Test of Normality - Shapiro,Anderson-Darling
+Test of variance  - Levene's,Barlett,KMO
+Test of independance - Chi-Square
+Test of Proportions 
+
+Replace mean with Median in (Xbar-mu)/S/sqrt(n) is Non parametric test (no distribution is assumed) 
+
+- Predictive Modeling   
+
+Supervised, Unsupervised,Semi-Supervised, Reinforcement 
+Discriminant Analysis (Linear,Quadratic) - Classification Algorithm
+
+Unsupervised - Hierarchial(Agglo and divisive), Non Hierarchial(K-means,PAM,CLARA), Fuzzy Clustering, Location Based, Model Based, Density based(to identify outliers)-Non Linear partitioning  
+Fuzzy Clustering - Fuzzy clustering is a form of clustering in which each data point can belong to more than one cluster.
+Dim-Reduction - Conts (PCA,FA), Discrete(MCA - multiple correspondence analysis) 
+
+- Prescriptive Modeling 
+
+XLSTAT addin for excel 

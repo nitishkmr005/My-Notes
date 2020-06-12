@@ -1,0 +1,73 @@
+Advanced Computer Vision 
+--------------------------
+
+CNN Architectures - 
+
+http://image-net.org/
+https://www.eff.org/issues/ai
+https://keras.io/applications/
+https://modelzoo.co/
+
+1) 1998 - Lenet-5 - 5 layers 
+
+LeCun, 5 layers for learning weights, No Zero padding, Average pooling, 62000parameters, Tanh activation function, no deeper network because of vanishing gradients
+
+2) 2012 - Alexnet - 8 layers 
+
+Alex Krizhevsky, MaxPooling and ReLu activation function, Used Dropout layer, Large filters of 11*11 and 5*5, SGD with momentum, Image Augmentation 
+ 
+3) VGG-16 
+
+- Used Padding, 224*224 image 
+- To prevent vanishing /exploding gradients, training was done in stages. First stage train shallow network, next stage borrow weights from shallow network to larger and train the new layers
+
+4) 2014 - GoogleNet/Inception(2014) - 22 layers
+
+- Stem, Inception Module, Auxillary Classifier 
+- It used batch normalization, image distortions and RMSprop
+- 1*1 convolution reduces depth (like 100 filters 10 filters(100 like tranparent papers captured in 10))  
+- Reduced the number of parameters from 60 million (AlexNet) to 4 million
+- Same image size to cancatenate 
+- Auxillary classifier reduces vanishing gradients problem 
+
+5) 2015 - Resnet - 151 layers
+
+- From Microsoft 
+- Skip Connections introduced 
+- Mathematically, h(x) = f(x) + i(x) where i =  1 * x, f(x) is the normal flow
+
+Tranfer Learning 
+-----------------
+
+First few layers extract atomic level features like horizontal, vertical, angular level. 
+
+- ConvNet as fixed feature extractor. 
+- Fine-tuning the ConvNet. 
+- Pretrained models. 
+
+More similar the dataset, more the layers we can reuse from transfer learning 
+While training tranfer learning, weights will not be initialized but it will start taking weights from trained weights. 
+
+Tranfer Learning Strategies - 
+-------------------------------
+
+1) High smilarity, smaller dataset size  
+- Remove dense layer and keep CNN layes as it is. Add new dense layer, freeze CNN layers. 
+
+2) Target dataset is large and similar to base training dataset 
+- Remove the last fully connected layer and replace with the layer matching the number of classes in the target dataset
+- Initialize the rest of the weights using the pre-trained weights, i.e., unfreeze the layers of the pre-trained network
+- Retrain the entire neural network
+
+3) Target dataset is small and different from the base training dataset 
+- Since the data is small, overfitting is a concern
+- Reuse only Gabor layers and train remaining layers with dense layers. 
+- As the target dataset is very different from the base dataset, the higher level features in the ConvNet would not be of any relevance to the target dataset. 
+So, the new network will only use the first few layers of the base ConvNet. 
+
+4) Target dataset is large and different from the base training dataset
+- As the target dataset is large and different from the base dataset, we can train the ConvNet from scratch.
+- However, in practice, it is beneficial to initialize the weights from the pre-trained network and fine-tune them as it might make the training faster. This is also called domain adaptation
+
+
+# Trained on MNIST dataset and reuse it for SVHN (with noise) => Accuracy will be poor. but if its reverse => accuracy will be good. 

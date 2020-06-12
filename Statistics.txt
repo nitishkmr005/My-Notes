@@ -1,0 +1,367 @@
+Statistics
+-------------
+
+Big data  
+---------
+Data which cannot be analyzed/processed/managed with traditional software/algorithms within a reasonable amount of time. (Ex Facebook processes more than 250million pics/day)
+
+4 pillars of statistics analytics 
+----------------------------------
+
+Descriptive analytics - What do statistical measures say? - Central tendancy, averages, mean, standard deviation, histogram, box plots, scatter diagrams
+Diagnostics analytics - Why numbers looks like this? - Hypothesis, conjectures, assumptions, inferential stats 
+Predictive analytics - predict something - Regressional analysis
+Prescriptive analytics - Decision making 
+
+Data is raw material and information is the finished product(processed raw data) which helps in decision making
+
+7 tools of quality - 
+Checksheet, Frequency Distribution, Stratification, Scatter Diagram, Pareto Diagram, Ishikawa Diagram, Control Charts
+
+Histogram - Bell curve, Right skew, Left skew, two peaked points 
+
+Central Tendancy 
+------------------
+Data has tendancy to cluster around the middle value.
+Statistical Average - Mean, Median, Mode, Harmonic Mean, Geometric Mean
+Measures of CT - Arithmetic Mean, Median, Mode 
+
+1) Arithmetic mean is affected by outliers (Very high/Very low values)
+2) Median is middle number when data is arranged in ascending order (not affected by outliers) - Used in market research (Consumer ranking) 
+3) Mode is used in most frequently used shoe size - there can be multimodal values => Not uniquely defined for multimodal situaltions 
+
+For bell curve, Tallest point, middle point and arithmatic mean all are equal.
+
+Measures of dispersion 
+-------------------------
+
+1) Range = Xmax - Xmin
+   Range should not be used for outliers 
+   
+2) IQR = Q3-Q1 ==> This is range calculated on middle 50% of data 
+   Because range will collapse we use IQR 
+   First and last 25% are not considered in data arranged in ascending order 
+   
+   This is resistant to outliers 
+   
+3) Standard Deviation => Used in inferential statistics ==> More the value more the data is scattered
+   Square root of variance 
+   
+   SD calculation ==> SD=Sqrt of {Sum[(X-Xbar)^2]/(N-1)} ==> SD is measure of risk and volatility of stocks 
+   
+4) Variance = {Sum[(X-Xbar)^2]/(N)}
+
+5) Coefficient of Variation => Relative SD => Measure of Consistency  
+   COV=(SD/Sample Mean)
+   
+Empirical Rule 
+----------------
+
+For Bell curve, (Normal Distribution)
+
+u+-1SD ==> 68% data 
+u+-2SD ==> 95% data 
+u+-3SD ==> 99.7% data 
+
+5 number Summary => BOXPLOT
+----------------------------
+
+Describe center, spread and shape of data
+Xsmallest, Q1, Q2, Q3, Qlargest
+Boxplot identifies data patterns, outliers, segment performance
+
+###########################################################################################################################
+
+Probability
+-------------
+
+A Priori Probability - Derived by deductive reasoning 
+Empirical Probability - 
+Subjective Probability - Derived from individual personal judgement (Subject's opinions and past experience)
+
+Independent Events 
+--------------------
+Two events A and B are independent if A is not influenced by occurence of B (Tossing a coing two times)
+
+Addition rules
+---------------
+A and B are mutually exclusive 
+P(AUB) = P(A) + P(B)
+
+A and B are not mutually exclusive 
+P(AUB) = P(A) + P(B) - P(AnB)
+
+P(King or Queen) = P(King) + P(Queen) = 4/52 + 4/52 = 2/13 (Mutually Exclusive Events)
+P(King or Diamond) = P(King) + P(Diamond) - P(King and Diamond) = 4/52 + 13/52 - 1/52 = 4/13 (Not mutually exclusive events)
+
+Multiplication Rule 
+---------------------
+1) A and B are independent
+P(AnB) = P(A).P(B)  ==> Tossing a coin twice P(H and T)=1/2*1/2=1/4 
+
+2) Events are not independent, 
+P(AnB) = P(A).P(B/A) ==> P(B/A) is P(B) given that A has already happened
+
+Conditional Probability
+-------------------------
+
+P(B|A) = P(A∩B) / P(A)
+
+Contigency Table 
+
+	T | T' | RT |
+R |	  |	   |    |
+R'|   |    |    |
+CT|   |    |    | ==> Marginal Probabilities
+
+Joint and Marginal Probabilities
+
+	   CD | No CD | RT |
+	   -----------------
+AC    |20 |	50    | 70 |
+------------------------
+No AC |20 | 10    | 30 |
+------------------------
+CT    |40 | 60    | 100|
+------------------------
+
+P(CD|AC)=20/70 = 2/7
+
+Bayes Theorem 
+--------------
+
+P(B|A) = P(A∩B) / P(A)
+P(A|B) = P(A∩B) / P(B)
+
+P(A|B) = [P(B|A)*P(A)]/P(B)
+where P(B)NE0
+
+P(B|A) = [P(A|B)*P(B)]/P(A) 
+where P(A)NE0
+
+Bayes Theorem Example - 
+
+3Red and 4Blacks from Bag1
+5Red and 6Blacks from Bag2
+
+P(Red) = (0.5)3/7 + (0.5)5/11
+P(Black) = (0.5)4/7 + (0.5)6/11
+P(Red/Bag1) = 3/7
+
+P(Bag1/Red) = [P(Red/Bag1)*P(Bag1)]/P(Red) = 33/68 
+
+##########################################################################################################################
+
+Probability Distribution 
+--------------------------
+Total listings of the various values the random variable can take along with the corresponding probability of each value.
+
+Ex - Pattern of distribution of the machine breakdowns in manufacturing unit. 
+Since we use past data, it is called observed distribution 
+
+Binomial and poisson distribution are descrete distributions 
+Normal is continous distribution
+
+Ex - Two dice => sum of two dice can take from 2 to 12.
+
+Binomial Distribution (Bernoulli process)
+---------------------------------------------
+It is used in quality control and quality assurance function.
+Also being used in banks and insurance corporations to an idea of the proportion customers who are satisfied with the service quality.
+
+Conditions for BD - 
+1) Trials are independant and random
+2) There are fixed number of trials (n trials) 
+3) There are only two outcomes i.e. Success and failure 
+4) The probabilty of success is uniform through out the n trials 
+
+Probability of getting x successes out of n trials is Binomial Distribution. 
+
+import scipy.stats a stats 
+binomial=stats.binom.pmf(k,n,p)  //CDF for cumulative probability
+
+P(X) = nCx * (pi)^x * (1-pi)^(n-x)
+Mean = n*pi 
+SD = Sqrt[n*pi*(1-pi)]
+
+Example for BD - 
+
+Assume there are 100variables, randomly we have to select 10 variables. Out of 100, 5 variables are very strong predictor variables.
+What is the probability that exactly two strong variables are selected. 
+
+P(Strong variable) = 5/100 
+
+SSWWWWWWWW,WWWWWWWWSS.... ==> 10C2 combinations 
+
+10C2*(0.05)^2*(0.95)^8
+
+Poisson Distribution
+----------------------
+
+Major role in quality control in reducing the number of defects per standard unit
+Ex- Number of defects per item 
+
+This helps to predict the arrival rate in a waiting line situaltion where a queue is formed. 
+Helps to plan how many service staff are required for a work scenario. 
+Number of defects per item can be determined by the poisson distribution.
+Number of defective (one or more defects) items can be determined by the binomial distribution. 
+
+Reducing number of complains => Poisson
+Number of dissatisfied customers => Binomial 
+
+1) Probability of getting exactly one success in a continuous interval is constant
+2) Probability of a success in any one interval is independant of the probability of success occuring in any other interval
+3) Probability of getting more than one success in an interval is 0.
+
+Here n is infinite
+
+When n is very large then n*phi(P(success) is very small) will be a constant lambda ==> Now the BD approaches PD 
+
+P(X) = [Y^x * e^(-x)]/x!
+Mean = Y
+SD   = Y
+
+Ex - Number of calls you receive in a day, The number of car accidents in a day
+
+No defect/1 defect => Binomial 
+more than 1 defect => Poisson 
+
+4.5 calls per 5mins => If agent takes 7mins => (7*4.5)/5
+
+Normal Distribution 
+---------------------
+Bell curve 
+Continuous distribution
+Mean, Median and mode are all equal to one another 
+Symmetrical about its mean 
+Probability is area of curve (which is integration of f(x)(PDF))
+
+68% for Mean +- 1SD
+95% for Mean +- 2SD
+99.7% for Mean +- 3SD
+
+Standard Normal Distribution - Mean=0, SD=1 
+With Standard Normal Distribution only one table can be used for any random variable instead of seperate tables for each variable. 
+
+Sampling Distribution 
+-----------------------
+
+Objective of Sampling is to derive inference from Sample about the Population
+
+Point estimates as population parameter - Mean and proportions 
+Xbar => Mean of Sample 
+mu   => Mean of Population 
+pcap => Proportion of sample 
+pi   => Proportion of population 
+
+Take multiple samples and take means of all samples. These means of all samples will have normal distribution. 
+
+Distribution obtained from means of all different samples => Sampling Distribution (not sample) 
+E(Xbar) => Mean of (Sample means) = Mean of population
+Sampling error = |Xbar - mu| => Zero for sample size same as population size 
+Sample size => To reduce the sample error we will have to take large sample sizes. 
+
+Central Limit Theorem 
+-----------------------
+
+Irrespective of the shape of the distribution of the original population , the sampling distribution of the mean will approach a normal distribution as the size of the
+sample increases and becomes large.
+
+Law of large numbers => N>30 
+
+Variance and SD of sampling distribution 
+------------------------------------------
+Variance of Sampling Distribution = Population variance/n 
+Standard Error = SD of population/sqrt(n)   n=> Number of samples 
+
+A standard error is the standard deviation of the sampling distribution of a statistic
+
+Hypothesis
+-----------
+
+Null Hypothesis => u=1
+Alternate Hypothesis - Contrary to Null Hypothesis => u<1
+
+		Actual 
+--------------------------
+	   | True   | False  |
+--------------------------
+Reject |        |	     |
+(False)|Alpha   |No Error|
+--------------------------
+Accept |        |        |
+(True) |No Error| Beta   |
+--------------------------
+
+alpha   = 0.05 ==> predecided risk (willingness to take risk) 
+p value = 0.03 ==> O/P of the test should be less than alpha 
+
+(1-alpha) = 1-0.05 (95% minimum acceptable confidence level for alternate Hypothesis) 
+(1-pvalue)= 1-0.03 (97% actual confidence level) => Reject Null and accept alternate
+
+pvalue < alpha => Reject Null and accept alternate since pvalue is less than alpha 
+
+Hypothesis Testing Z Test - Zscore
+-----------------------------------
+Xbar (Sample mean) = 30000
+SD of population = 8000
+n=400
+alpha = 0.05 => 95% (1-alpha)% confidence 
+if mean income is greater than 29000 then launch the product 
+
+Standard error(SE) = SD of population/sqrt(N) = 8000/sqrt(400) = 400 
+u+-2SE = (30000-2*400 to 30000+2*400) = (29200 to 30800) => Confidence Interval 
+
+#Z=(Xbar - mu)/SE = (30000-29000)/400 = 2.5 
+pvalue= 1-normdist(Z) = 0.00621  => For upper tail 
+
+Student's t Test - t-Stat
+---------------------------
+
+Assumptions - 
+
+Useful for small samples 
+Population is normally distributed
+dont know about population variance 
+
+How to find data is normally distributed or not => shapiro test, qqplot, Levene test for equal variance 
+
+sample size n=49
+Sample mean xbar = 11.88
+mu = 12 => H0 : mu=12 and Ha : < 12 
+alpha = 0.025 
+SD of population = 0.35 
+
+since n> 30 we can assume it as population 
+
+SE = 0.35/sqrt(49) = 0.05
+
+tstat= (xbar - mu) / se = (11.88-12)/0.05 = -2.4
+degree of freedom df= n-1 
+p = (stats.t.cdf(tstat, df=df))  =  0.01 for tstat=2.4 (since symmetric in normal distribution) and degrees of freedom df=48 ===> 0.01 pvalue is caculated based on table for t test 
+
+If distribution is not normal then we may have to use non-parametric test like WilcoxonTtest
+
+ANOVA - F-Stat 
+---------------
+
+t test compares the means of 2 samples and Annova is used for more than 2 samples 
+
+parametric tests => Makes assumption for distribution of data => Z-Test, t-Test 
+Non parametric test => ANOVA and WilcoxonTtest
+
+Kruskal–Wallis testis used in place of ANOVA if the distribution is not normal
+
+CHI-SQ Test 
+-------------
+
+This is non parametric test. 
+
+Two continous variable => Corelation 
+Two Categorical variable => Associate 
+
+DF=(rows-1)*(cols-1) 
+
+To check how good model is fit on data 
+
+#####################################################################################################################################

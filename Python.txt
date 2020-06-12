@@ -1,0 +1,267 @@
+Machine Learning 
+-------------------------
+
+Applications - 
+
+Facebook Facial recognition 
+Virtual Reality headsets
+Speech to text in IPHONE
+Dog robots - Learn how to walk (Reinforcement learning algorithm)
+Facebook Ads
+Amazon, Netflix
+Space - explore new territories such as mars
+In medicines to save lives 
+
+Python Basics - 
+
+##############################
+
+Print statements
+--------------------
+
+One = 12
+Two = name
+print('My number is {One} and my name is {Two}').format(One=num, Two=name)
+
+Strings 
+--------------
+
+S='abcdefgh'
+S[0] ==> 'a' 
+S[0:] ==> 'abcdefgh'
+S[:3]  or S[0:3] ==> 'abc'   ### Not including 'd'
+S[3:6] ==> 'def' 
+
+Lists 
+------------
+
+my_list = ['a', 'b', 'c']
+my_list_append('d')  ===> ['a', 'b', 'c', 'd'] 
+
+my_list[0] ===> 'a'
+
+my_list[1:3] ===> ['b', 'c']
+
+my_list[0] = 'New' ===> ['New', 'b', 'c', 'd']
+
+nest = [1, 2, [3, 4]]
+nest[2][1] ==> 4
+
+Dictionaries 
+-------------------
+
+d = {'key1' : 'value', 'key2' :123}
+d['key1'] ===> 'value' 
+
+d= {'k1':[1,2,3]}
+d['k1'][0] ==> 1
+
+d= {'k1':{innerkey':[1,2,3]}}
+d['k1']['innerkey'][1] ==> 2
+
+Tuple 
+---------------
+
+t = (1, 2, 3)
+t[0] = 'new' ==> error = tuple object doesnt support item assignment
+
+Set 
+-------------
+collection of unique numbers 
+
+Set([1,1,2,2,2,3,3,4,4]) ==> (1,2,3,4)
+
+s={1,2,3}
+s.add(5) ==> {1,2,3,5}
+if we add 5 again it will not add since it should have unique values 
+
+Comparison, if and for loop 
+-----------------------------
+
+1==1 ==> True 
+(1<2 and 3>5) ==> False
+
+if 1<2:
+    print('yes') ==> yes 
+elif 3==3:
+	print('elif')
+else:
+	print('no')
+	
+seq = [1,2,3,4,5]
+for num in seq:
+	print(num)
+==> 
+1
+2
+3
+4
+5
+
+i=1
+while i < 5:
+	print('i is : {}'.format(i))
+	i=i+1
+==> 
+i is : 1
+i is : 2
+i is : 3
+i is : 4
+
+list(range(0,5)) ==> [0,1,2,3,4]
+list(range(10)) ==> [0,1,2,3,4,5,6,7,8,9]
+
+x=[1,2,3,4]
+out=[]
+for num in x:
+	out.append(num**2)
+print(out)
+==> [1,4,9,16]
+
+OR
+
+[num**2 for num in x]
+
+################################################################################################################################################################################
+																		GREATLEARNING 
+################################################################################################################################################################################
+
+ML Applications - 
+
+SIRI
+CORTANA
+GMAIL sorting mails 
+ALEXA
+
+
+Data science - 
+
+Data Patterns - trends, association, cluster,
+
+Statistics - calculate avg, mean..
+Descriptive (Describes data), 
+Inferential statistics 
+
+After data analysis build data models 
+
+ML algorithms extracts hidden patterns ==> this is called models 
+
+------------------------------------------
+
+When do we use ML - EX- Mail spamming recognization 
+
+
+Mathematical Space (Feature Space) 
+
+ML Categories - 
+Supervised (Regression models, classification models - Training and Testing), 
+Unsupervised (no Training and testing and no independant var, clustering techniques, PCA) - Flat and Hierarchial cluster
+Reinforcement Learning  - Self Driving cars (Initially trained and later they learn from environment around them)
+
+Null hypothesis 
+Property of a true model 
+
+################################################################################################################################################################################
+
+Python 
+----------
+
+SHIFT+TAB => HELP 
+CNTRL+ENTER ==> RUN 
+
+Numpy ==> This package helps in multidimentional array handling 
+scify => Statistical package 
+Matplotlib => create charts like bar charts 
+pandas => array handling and data frame handling 
+
+conda install -c plotly plotly=4.1.0
+
+plotly packgage install 
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+a=4
+print(type(a))
+All are objects (no size of variable)
+# is comment one line 
+
+Addressing in python ==> print(id(a))
+
+Garbage collector 
+
+True (not true) is boolean 
+
+a="Hello World"
+a[0] ==> H
+len(a) ==> 11
+a[-1] ==> d
+a[-2] ==> l
+print (a[0:5]) ==> "Hello "
+from is included and to is excluded 
+a[6:11] or a[6:len(a)] or a[6:] ==> World 
+a[11] ==> error (index out of error) run time error 
+a[:] ==> Hello World 
+a[::2] ==> HloWrd 
+
+exit() ==> exit the interpreter 
+
+a=4 
+b="Hello"
+c=a+b ==> Syntax error 
+c=str(a)+b ==> 4Hello 
+str=5.0 
+type(str) ==> float
+c=str(a)+b ==> error 
+del str 
+typr(str) ==> type  # getback old type 
+c=str(a)+b ==> 4Hello # it works now 
+
+c="Hi {} How are you?".format("Nitish")
+print(c) ==> Hi Nitish How are you? 
+username="Nitish" 
+print("Hi {} How are you?".format(username)) ==> Hi Nitish How are you? 
+
+print("Hi {} How are you? {}}".format(username,"I am good")) ==> Hi Nitish How are you? I am good 
+
+c="Hello {}" 
+d=c.format("World")
+print(d) ==> Hello World 
+
+--------------------------------------------------------------------------------------------------------------
+
+idle software 
+
+a=4
+if(a==4): 
+	print("Hello World") 
+	
+in python null is none 	
+
+https://pymotw.com/3/  
+https://docs.python.org/3/library/  ==> Python standard library
+
+https://jsonplaceholder.typicode.com/todos/ ==> Test data 
+
+--------------------------------------------------------------------------------------------------------------
+
+Visualization - 
+-------------------------
+
+(Seaborn plots)
+
+Countplot
+Distribution plot  - Count of range (count of people in 1 to 10 age)
+Facetgrid => since no hue on distribution plot (ex distribution plot on both male age vs female age)
+Barplot - like average age of male, felmale 
+Boxplot => Combination of distribution plot and bar plot (Statistically aligned plot)
+Strip plot => Concentration of data at which point ?
+Swarmplot => Concentration of data at which point ?
+jointplot => 3 graphs in one 
+heatmap => Correlation plotting 
+Linearmodel plot (sns.lmplot())
+pairplot ==> Combination of all plots 
+
+Relationship between variables using corr()
+
+KDE plots 
+
+hue=> bivariate analysis 

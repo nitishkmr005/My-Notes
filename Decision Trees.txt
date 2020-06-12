@@ -1,0 +1,46 @@
+Ensemble 
+-----------
+https://drive.google.com/drive/folders/1Ox8LhZrIzfF_xHosFygO3NzzVGoaDp5N => Ensemble Material link 
+
+In case regression line having negative slope => R-square will be negative (Overift or underfit) i.e. SSE>SST
+SSE+SSR=SST 
+
+SSE distance of point from predicted line 
+SST distance of point from base line(average line parallel line from x-axis) 
+
+R-Square = [1-(SSE/SST)]
+
+Entropy 
+--------
+
+Degree of uncertainity/Randomness/Disorder/Impurity
+
+Entropy = Sum(-pi * log2pi)
+Entropy ranges from 0 to 1 
+
+Decision Trees - CART Algorithm
+---------------------------------
+ 
+What is the root node to select which leads to reduction in entropy 
+Cart algorithm which calculates Information gain for all features to decide which feature to select as root node 
+If information gain is same for two features algorithm selects feature randomly.
+Can be used for both classification and regression
+First question of root node is important
+
+In classification it tries reduce entropy and in regression it tries to reduce SSE.
+
+predict_proba => probability of predicted value 
+http://webgraphviz.com  => Builds decision tree 
+
+Not much preprocessing(missing values) required for decision tree 
+Lot of levels in decision tree => Overfitting 
+Decision Boundary used in all classification algorithms
+In Decision tree decision boundaries are always axis parallel.
+KNN - Linear Decision Boundary 
+
+Number of decision compartments is equal to number of leaf nodes 
+Entropy should be minimized in classification decision tree
+SSE should be minimized in regression decision tree
+Decision Trees are non linear models 
+Easy to visualize 
+

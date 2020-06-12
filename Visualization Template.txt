@@ -1,0 +1,241 @@
+Packages - 
+-----------
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pylab
+
+############################################################################################################################################################
+                                                                
+																Visualization 
+
+############################################################################################################################################################
+
+Categorical data plot
+
+########################
+
+1) Count plot 
+   sns.countplot(x='age', data=DF) 					 //* We can use sns.countplot(y='age', data=DF)
+   sns.countplot(x='cat_col',data=DF,hue='cat_col')
+
+2) Stripplot 
+   sns.stripplot(DF['cat_col'], DF['num_col'])
+   sns.stripplot(DF['cat_col'], DF['num_col'], jitter=True) 
+   
+3) Swarmplot 
+   sns.swarmplot(DF['num_col'], DF['cat_col'])    			
+   
+4) Boxplot 														//* Min to Q1 and Q3 to Max are tails, check if mean>or<median 
+   sns.boxplot(DF['num_col'])
+   sns.boxplot(DF['cat_col'], DF['num_col'], hue=DF['cat_col']) 
+   sns.boxplot(DF['cat_col'], DF['num_col']) 
+   
+   import matplotlib.pylab as plt
+   DF.boxplot(by = 'GROUP',  layout=(2,4), figsize=(15, 10))
+ 
+5) Barplot													
+   sns.barplot(DF['cat_col'], DF['num_col'], hue=DF['cat_col']) 
+   DF['Age'].value_counts().head(10).plot.bar()
+
+   # Use seaborn to build bar plots of the Titanic dataset feature 'Survived' split (faceted) over the feature 'Pclass'(Pclass=1,2,3) 
+   sns.factorplot(x='Survived', col='Pclass', kind='count', data=df_train);
+   
+6) Pointplot
+   sns.pointplot(DF['cat_col'], DF['num_col'], hue=DF['cat_col']) //*Here columnname2 is numerical and columnname1 and columnname3 are categorical
+
+Continuous data plot 
+
+########################
+
+1) Pair plot 
+   sns.pairplot(DF,diag_kind='kde',hue='cat_col')
+   sns.pairplot(DF[['num_col1', 'num_col2', 'num_col3']])   
+   
+2) Heatmap
+   plt.figure(figsize=(14,12))
+   sns.heatmap(DF.corr(),annot=True)    //*annot=True => Displays corr values inside heatmap cells 
+   
+   sns.heatmap(DF.isna(),yticklabels=False,cbar=False,cmap='viridis')
+   
+   Visualizing Missing values as a matrix 
+   import missingno as msno 
+   msno.matrix(DF) 
+
+3) distplot with kde  					//*Univariate 
+   sns.distplot(DF['num_col'])
+   
+   distplot without kde (Histogram) => 
+   sns.distplot(DF['num_col'], kde=False, rug=True);
+   
+   Comparison of distplot on categorical
+   sns.distplot(DF[DF.PersonalLoan == 0]['CCAvg'], color = 'r')
+   sns.distplot(DF[DF.PersonalLoan == 1]['CCAvg'], color = 'g')
+
+4) Histogram
+   DF[num_col].plot.hist()
+   DF[DF[num_col] < 200]['num_col'].plot.hist()
+   
+4) jointplot 							//*Bivariate (Histogram+Scatter)
+   
+   sns.jointplot(DF['num_col1'], DF['num_col2'])
+   sns.jointplot(DF['num_col1'], DF['num_col2'], kind="hex")  //*Hex bin plots
+   sns.jointplot(DF['num_col1'], DF['num_col2'], kind="kde")  //Kernel Density Estimation 
+   
+5) lmplot => Used in Linear Relationship b/w 2 variables
+   sns.lmplot(x="num_col1", y="num_col2", data=DF)  	
+   sns.lmplot(x="num_col1", y="num_col2", hue="cat_col", data=DF)  //* Good to use in linear regression models (Ex-to compare between S,M,L cars mpg with other independant columns) 
+
+5) Boxplot
+   sns.boxplot(x='cat_col1',y='num_col2',data=DF)
+   
+   Stats box plot for before and after plot 
+   DF[['Old Scheme (in thousands)','New Scheme (in thousands)']].plot(kind='box')
+
+6) Plots used in Linear Regression
+
+   plt.scatter(x_parameters, y_parameters, color='blue')
+   plt.plot(x_parameters, regr.predict(x_parameters), color='red', linewidth=4)
+   # Supress axis value
+   plt.xticks(())
+   plt.yticks(())
+   plt.show()
+   
+   Jointplot with pearsonr coefficient
+   -------------------------------------
+   sns.set(style="darkgrid", color_codes=True)
+       
+   with sns.axes_style("white"):
+       j=sns.jointplot(DF['MDVP:Shimmer(dB)'], DF['MDVP:Shimmer'], kind="reg")
+       j.annotate(stats.pearsonr)
+       plt.show()
+		
+   Jointplot with R Square 
+   --------------------------
+   from scipy import stats
+   def r2(x, y):
+       return stats.pearsonr(x, y)[0] ** 2
+   sns.jointplot(x=DF_medium_large['wt'], y=DF_medium_large['mpg'], kind="reg", stat_func=r2)
+   
+7) Test accuracy plot in KNN model 
+   
+   plt.title('k-NN: Varying Number of Neighbors')
+   plt.plot(K, test_accuracy_plot, label = 'Testing Accuracy')
+   plt.plot(K, train_accuracy_plot, label = 'Training Accuracy')
+   plt.legend()
+   plt.xlabel('Number of Neighbors')
+   plt.ylabel('Accuracy')
+   plt.show()
+
+  
+9) Elbow plot used in clustering 
+  
+  plt.figure(figsize=(12,6))
+  plt.plot( clusters_df.num_clusters, clusters_df.cluster_errors, marker = "o" )
+
+10)Dendogram 
+
+  from scipy.cluster.hierarchy import dendrogram, linkage
+  from scipy.spatial.distance import pdist
+  plt.figure(figsize=(18, 16))
+  plt.title('Agglomerative Hierarchical Clustering Dendogram')
+  plt.xlabel('sample index')
+  plt.ylabel('Distance')
+  Z = linkage(df_scaled, 'ward')
+  dendrogram(Z,leaf_rotation=90.0,p=25,color_threshold=12,leaf_font_size=10,truncate_mode='level')
+  plt.tight_layout()
+  
+11) Pie Chart 
+  
+  source_counts =pd.DataFrame(loans["Personal Loan"].value_counts()).reset_index()
+  source_counts.columns =["Labels","Personal Loan"]
+  fig1, ax1 = plot.subplots()
+  explode = (0, 0.15)
+  ax1.pie(source_counts["Personal Loan"], explode=explode, labels=source_counts["Labels"], autopct='%1.1f%%',shadow=True, startangle=70)
+  ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+  plot.title("Personal Loan Percentage")
+  plot.show()
+
+12) Scatter plot used in DBSCAN
+
+  sns.set(rc={'figure.figsize':(11.7,8.27)})
+  sns.scatterplot(x='Xcircle_X1', y='Xcircle_X2', data=df, palette='spring')
+
+  sns.scatterplot(x='Xcircle_X1', y='Xcircle_X2', hue='KM_Cluster', data=df, palette='spring')
+  
+13) PCA Analysis plot 
+
+  plt.bar(range(1,8), pca.explained_variance_ratio_, alpha=0.5, align='center', label='individual explained variance')
+  plt.step(range(1,8),pca.explained_variance_ratio_.cumsum(), where= 'mid', label='cumulative explained variance')
+  plt.ylabel('Explained variance ratio')
+  plt.xlabel('Principal components')
+  plt.legend(loc = 'best')
+  plt.show()
+
+14) Mesh grid for SVM 
+
+    def plot_boundary(svc):
+        
+        # create a mesh to plot in
+        x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+        y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+        h = (x_max / x_min)/100
+        xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+        
+        plt.subplot(1, 1, 1)
+        Z = svc.predict(np.c_[xx.ravel(), yy.ravel()])
+        Z = Z.reshape(xx.shape)
+        plt.contourf(xx, yy, Z, cmap=plt.cm.Paired, alpha=0.7)
+    
+        plt.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.Paired)
+        plt.xlabel('Sepal length')
+        plt.ylabel('Sepal width')
+        plt.xlim(xx.min(), xx.max())
+        #plt.title('SVC with linear kernel')
+        plt.show()  
+		
+	svc = svm.SVC(C=1, kernel='linear').fit(X,y)
+    plot_boundary(svc)	
+	
+	svc = svm.SVC(C=1, kernel='rbf', gamma=1).fit(X,y)
+    plot_boundary(svc)
+	
+	svc = svm.SVC(C=1, kernel='poly', degree=3, gamma=1).fit(X,y)
+    plot_boundary(svc)
+
+15) ROC plot - 
+	-----------
+    pl.clf()
+	pl.plot(fpr1,tpr1,label='ROC curve for logistic (area=%0.2f)' % roc_auc1)
+	pl.plot(fpr2,tpr2,label='ROC curve for SVC (area=%0.2f)' % roc_auc2)
+	pl.plot([0,1],[0,1],'k--')
+	pl.xlim([0.0,1.0])
+	pl.ylim([0.0,1.0])
+	pl.xlabel('FPR')
+	pl.ylabel('TPR')
+	pl.title('ROC example')
+	pl.legend(loc='lower right')
+	pl.show()
+
+16) Dist plot of multiple columns - 
+
+    for i in df.columns:
+            if df[i].dtype == 'float64':
+                print(i)
+                sns.distplot(df[i], kde=True, rug=True)
+                plt.show()
+	
+Multi plot 
+-------------
+
+fig, axs = plt.subplots(nrows=2,ncols=3,figsize=(20, 10))
+sns.countplot(x='Embarked', data=df, ax=axs[0][0])
+sns.countplot(x='Parch', data=df, ax=axs[0][1])
+sns.countplot(x='SibSp', data=df, ax=axs[0][2])
+sns.countplot(x='Pclass', data=df, ax=axs[1][0])
+sns.countplot(x='Sex', data=df, ax=axs[1][1])
+sns.countplot(x='Survived', data=df, ax=axs[1][2])
+fig.savefig('test2png.png', dpi=100)
+
+	
+############################################################################################################################################################

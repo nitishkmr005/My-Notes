@@ -1,0 +1,69 @@
+Naive Bayes algorithm
+-----------------------
+
+Conditional Probability - P(A/B) => A - Hypothesis give evidence B 
+
+P(B|A) = P(A∩B) / P(A)
+P(A|B) = P(A∩B) / P(B)
+
+P(A|B) = [P(B|A)*P(A)]/P(B)
+where P(B)NE0
+
+P(B|A) = [P(A|B)*P(B)]/P(A) 
+where P(A)NE0
+
+P(King|Face) = P(Face|King) * P(King) / P(Face) = (1*4/52)/(12/52) = 1/3
+
+Doesnt need to have huge records (Training dataset size is less) 
+Assumes there is no Relationship between features => Features are independant 
+
+Multilabel classification 
+
+For numeric data like ages conver to categorical => Discretization 
+
+Multiple versions of Naive Bayes like Bernouli 
+Small changes in training data will not affect => Stable classifier 
+
+uci machine learning website
+
+df.Describe() => Check if all zeros for that column, if column is missed => it has non numeric cell 
+
+Default = 0.5 
+
+Advantages - 
+---------------
+1) When independant assumption holds good, it performs better than models and it needs less training data. 
+2) It perform well in case of categorical input variables compared to numerical variable(s). For numerical variable, normal distribution is assumed (bell curve, which is a strong assumption).
+3) Simple and Fast 
+
+Disadvantages - 
+-----------------
+1) For rare event, conditional probability will be zero(Numerator will be zero). To overcome this issue => We add Laplace Smoothing factor to the conditional probability
+2) Another limitation of Naive Bayes is the assumption of independent predictors. In real life, it is almost impossible that we get a set of predictors which are completely independent.
+
+Applications - 
+----------------
+1) Real time Prediction: Naive Bayes is an eager learning classifier and it is sure fast. Thus, it could be used for making predictions in real time.
+2) Multi class Prediction: This algorithm is also well known for multi class prediction feature. Here we can predict the probability of multiple classes of target variable.
+3) Text classification/ Spam Filtering/ Sentiment Analysis: Naive Bayes classifiers mostly used in text classification (due to better result in multi class problems and independence rule) have higher success rate as compared to other algorithms. As a result, it is widely used in Spam filtering (identify spam e-mail) and Sentiment Analysis (in social media analysis, to identify positive and negative customer sentiments)
+4) Recommendation System: Naive Bayes Classifier and Collaborative Filtering together builds a Recommendation System that uses machine learning and data mining techniques to filter unseen information and predict whether a user would like a given resource or not
+
+Types of Naive Bayes - 
+------------------------
+There are three types of Naive Bayes model under the scikit-learn library:
+
+1) Gaussian: It is used in classification and it assumes that features follow a normal distribution.
+
+1) Multinomial: It is used for discrete counts. For example, let’s say,  we have a text classification problem. Here we can consider Bernoulli trials which is one step further and instead of “word occurring in the document”, we have “count how often word occurs in the document”, you can think of it as “number of times outcome number x_i is observed over the n trials”.
+
+3) Bernoulli: The binomial model is useful if your feature vectors are binary (i.e. zeros and ones). One application would be text classification with ‘bag of words’ model where the 1s & 0s are “word occurs in the document” and “word does not occur in the document” respectively.
+
+Tips to improve the power of Naive Bayes Model
+----------------------------------------------------
+Here are some tips for improving power of Naive Bayes Model:
+
+1) If continuous features do not have normal distribution, we should use transformation or different methods to convert it in normal distribution.
+2) If test data set has zero frequency issue, apply smoothing techniques “Laplace Correction” to predict the class of test data set.
+3) Remove correlated features, as the highly correlated features are voted twice in the model and it can lead to over inflating importance.
+4) Naive Bayes classifiers has limited options for parameter tuning like alpha=1 for smoothing, fit_prior=[True|False] to learn class prior probabilities or not and some other options (look at detail here). I would recommend to focus on your  pre-processing of data and the feature selection.
+5) You might think to apply some classifier combination technique like ensembling, bagging and boosting but these methods would not help. Actually, “ensembling, boosting, bagging” won’t help since their purpose is to reduce variance. Naive Bayes has no variance to minimize.

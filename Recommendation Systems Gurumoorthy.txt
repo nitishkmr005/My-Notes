@@ -1,0 +1,258 @@
+Recommendation Systems
+------------------------
+Special case of unsupervised 
+
+ISLR 7th Edition - (Also github ISLR python repository) 
+Elements of statistical learning 
+
+Finds similarity/dissimilarity between users,products or interaction between users and products 
+
+- Collaborative - Like minded customers (similar users) 
+- Based on users who bought product along with actual product of interest
+- Based on past products bought
+
+Types of Recommendation Systems 
+---------------------------------
+
+1) Popularity Based - Like Trending videos in youtube, in GAANA
+Highly non personalized in nature 
+
+2) Market Basket Analysis/Association Analysis (Probabilistic Approach)
+Uses Transaction based data 
+
+3) Content Based Recommendation System -  
+Products and features of the product (Like Mobile)
+Distance based computation 
+Non personalized (No information about users behaviour) 
+
+If features are qualitative/textual in nature => How to handle 
+
+4) Collaborative Filtering - Like in Netflix two similar users(watching similar generes) are tagged and when one user watches it recommends to other users. 
+Complex and highly personalized 
+Like minded users (Once business has users information) => Cold start problems 
+Needs 3 types of information - Users, Products(Items like movies) and Interaction between Users and Products(Users can Like,Rate,Comment,Download movies) 
+
+- Memory Based Algorithm - IBCF (Item Based Collaborative Filtering),UBCF (User Based Collaborative Filtering)
+- Model Based Algorithm  - Singular Value Decomposition (SVD)
+
+5) Hybrid (Like Content+Collaborative) 
+
+##########################################################################################################################################
+
+											Market Basket Analysis/Association Analysis Recommendation System
+
+##########################################################################################################################################
+
+Requires Transaction Level information 
+
+Transaction  Item1 Item2 Item3...
+1              0     1     0 
+2
+3
+4
+..
+Data needs to be converted to above structure for this model
+
+What is the probability of buying milk given customer has bought bread?
+Antecedent (Bread) 
+Consequent (Milk) 
+
+Support and Confidence - 
+--------------------------
+1) Support = P(AnB) = Number of transactions containing both A and B / Total number of transactions
+Once Support is shortlisted with high probability then we can use confidence 
+
+2) Confidence = P(B|A) = Number of transactions containing both A and B / Number of transactions containing A 
+
+Probability Types - 
+Classical Probability (Tossing a coin)
+Empirical Probability (Probability of ac falling down) => No historical data 
+Subjective Probability => Probability close to zero (probability of earth quake) 
+
+One having high confidence, we use for recommendation. 
+
+3) Lift (A=>C) = Confidence(A=>C)/support(C), range:[0,infinity] => If A and C are independant then lift=1
+
+4) Leverage (A=>C) = Support(A=>C) - Support(A)*Support(C), range:[-1,1] If leverage=0 it means A and C are independant
+
+5) Conviction (A=>C) = 1-Support(C)/(1-Confidence(A=>C), range:[0,infinity] => If A and C are independant then Leverage=1
+
+##########################################################################################################################################
+
+											Content Based Recommendation System
+
+##########################################################################################################################################
+
+User profile vs product profile 
+
+Count Vectorizer 
+(DTM=> Document Term Matrix)
+------------------------------
+
+This is a poor topic 
+I liked a topic 
+I hated a topic 
+
+  This is a poor topic I liked hated 
+  
+1  1    1 1  1     1   0  0      0	
+2  0    0 1  0     1   1  1      0
+3  0    0 1  0     1   1  0      1
+
+TfidfVectorizer
+-----------------
+tf*idf
+Inverse document frequency (IDF)
+idf=log(N/df) for each term 
+
+N=> Total number of documents 
+df=> Document frequency for each term 
+
+for 'a' term => 
+
+N=3
+df=3
+idf=log(3/3) 
+tf=1
+
+tf*idf=> Words that occur very frequently(like "a","the") gets less weightage but gets higher weightage for less frequently occuring words.
+
+TF(t) = (Number of times term t appears in a document) / (Total number of terms in the document).
+
+analyzer can be "word" or "alphabet"
+
+ngram 
+-------
+ngram_range=(1,3) means it takes 1 word,2 and 3 words together 
+Multigram increases number of columns (mostly we use till 3gram) 
+
+This is good
+This is not good 
+
+for 2 gram => 
+"This is"   "is good"
+"This is"   "is not"  "not good"
+
+min_df=2 means word should appear atleast in 2 documents 
+tfidf_matrix=> Gives Sparse Matrix (lot of 0 in matrix) => Waste of Space, so converted to index and number 
+
+(0 0 1, 
+0 0 0, 
+0 1 0) => (0,2) 1  => Format -> (row,col) 1 (1number) 
+          (2,1) 1 
+
+stop_words='English' => Clear out those words present in English Dictionary 
+(Terms that were ignored because they either 
+- occurred in too many documents (max_df)
+- occurred in too few documents (min_df)
+- were cut off by feature selection (max_features))
+
+Jaccard Similarity - Computing match between user and movie => How much overlap between keywords 
+
+cosine Similarity 
+-------------------
+Most of the data values will be 0 so we dont use euclidean distance for text. 
+
+cos(theta) => 0 means theta=90 => Highly dissimilar (Lesser angle => More similar) 
+=> Finds similarity between rows not columns(as in correlation) 
+
+##########################################################################################################################################
+
+												Collaborative Recommendation Systems 
+
+##########################################################################################################################################
+
+Highly personalized => Every user gets the recommendation. 
+Gives predicted rating value of the user. 
+
+User 
+Item - Movie 
+Interaction - Rating,likes,shares 
+
+Memory Based Approach - 
+------------------------
+IBCF => Uses Pearson Similarity 
+UBCF => Cosine Similarity
+
+UBCF 
+------
+Memory based
+User A and B are similar because both purchase items X,Y,Z
+sim_options={'name': 'cosine', 'user_based': True}
+
+"User Item Matrix"
+
+Users  Batman  Toystory 
+1        4         3
+2
+3
+..
+
+||||
+VVVV
+Creates "User To User Similarity Matrix" (Cosine similarity matrix) 
+||||
+VVVV
+   
+   U1 U2 
+U1 
+U2
+
+To predict rating to be given by nth user to nth item 
+1) Identify top most similar users to item 
+
+IBCF 
+-----
+- From User-Iteam matrix, create Item-Item Similarity Matrix
+- sim_options={'name': 'pearson', 'user_based': False}
+
+Item-Item Similarity Matrix 
+           
+		   Batman  Toystory 
+Batman 
+Toystory 
+
+IBCF more efficient than UBCF 
+Easier to build and simple to maintain (User behaviour keeps changing) 
+
+Optimum K value should be selected for KNNWithMeans 
+'user_based':False => Item Based and pearson 
+
+was_impossible:False => Estimated rating calculation is possible => out of K atleast one item was rated by user => if True means user# has never rated (if True then increase K value) 
+was_impossible:True  => Estimated rating is average of ratings of whole dataset 
+
+Surprise Package for Collaborative Recommendation System
+-----------------------------------------------------------
+from surprise import Dataset,Reader
+
+- Each Raw UserID in pandas Inner UserId is created 
+- For each Raw ItemID in pandas Inner ItemID is created 
+- For User and Item, we find the predicted rating of the user and compare this predicted rating with actual user rating. 
+- After train test split, datatype of train and test will be different. 
+- To access a particular value, say estimate simply mention test_pred[12].est
+- algo.predict(uid="41891",iid="Wrong Trousers, The (1993)")
+- testset_new = trainset.build_anti_testset() # Converts training data to test data (Used when we dont do train_test split) 
+
+RawID and InnerID mapping - 
+---------------------------------
+print(trainset.to_raw_uid(0))   => From InnerUserID 0 to RawUserID (which is 248 in pandas) 
+print(trainset.to_inner_uid(0)) => From RawUserID 0 to InnerUserID 
+
+print(trainset.to_raw_iid(0))   => From InnerItemID 0 to RawItemID (Step Up 2 the Streets (2008)) # We gave title in surprise dataset not movieID
+print(trainset.to_inner_iid('Finding Nemo (2003)')) => From RawItemID to InnerID
+
+- "get_neighbors(iid, k)" of the algo used to get most similar movieIDs => algo.get_neighbors(273,3)
+Args:
+    iid(int): The (inner) id of the user (or item) for which we want the nearest neighbors.
+    k(int): The number of neighbors to retrieve.
+
+Returns:
+    The list of the ``k`` (inner) ids of the closest users (or items) to ``iid``.
+
+
+Singular Value Decomposition (SVD)
+-----------------------------------
+
+Linear,Logistic has multicollinearity problems => Dimension reductionality helps (it also helps in Cluster profiling) 
+Similar to PCA 
+More factors => Higher the accuracy 

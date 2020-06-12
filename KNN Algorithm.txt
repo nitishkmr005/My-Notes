@@ -1,0 +1,226 @@
+Supervised Algorithms 
+----------------------
+
+- Alternate Hypothesis (Alternate to null hypothesis)
+- Null Hypothesis (Says there is no relationship between independant attributes and target attribute)
+
+Hypothesis Testing - 
+If null hypothesis is likely to be true, we reject our model 
+If null hypothesis is unlikely to be true we reject null hypothesis ==> We can deploy the model in production 
+
+1) Identify type of data, source of data, how to ingest data. 
+2) Address missing values, outliers, duplicates, categorical data. 
+3) Select attributes for model 
+4) Split the data into training and test set in the ratio of 70:30.
+5) Select appropriate algorithm to model. Ex - Random Forest, 
+6) Build the model in python or R  or spark 
+7) Evaluate the model on test data ==> Model building is iterative excercise 
+8) Ensure it is not overfit ir underfit 
+9) Deploy at scale 
+
+Hidden pattern => cant discover them from SQL commands
+
+Preprocessing - Import csv, info(), Describe(), isnull()?, fillna(), correlation, variance 
+
+##########################################################################################################################
+
+Generative adversarial networks(GANs)
+AI/ML/DL 
+Quantom Computing can compute fast 
+Machines taking over wallstreets 
+
+Massive amounts of data is used in DL 
+Better performance with DL for massive data 
+For low volume of data same performance for AI,ML,DL 
+
+DL requires lots of data and computing power 
+
+ML - Supervised, Unsupervised
+DL - Supervised, Unsupervised
+
+Supervised - Simple linear, multiple linear, Logistic, Stepwise, Polynomial, Classification
+Unsupervised - Clustering, K mean
+
+Artificial Neural Networks - Input layer, hidden layer, Output layer => One hidden layer 
+Deep Neural Networks => Atleast 2 hidden layers 
+Dimension Reduction - Principal Component Analysis, Factor Analysis (Labeling the factors) 
+
+edlightened.co
+
+##########################################################################################################################
+
+Supervised -
+---------------
+Classification (Binary or Multi)- KNN, Decision tree, Support vector Machines(SVM), Ensemble Methods, Random Forest, Decision Stump, Logistic regression, Nearal Networks, XG Boost, Naive Bayes
+Regresssion - Linear Regression, Decision tree, NN, Random Forest, SVM, XGBoost (Xtreme Gradient Boosting Machine) 
+
+K Nearest Neighbours (KNN)
+---------------------------
+- Interpolating missing data application 
+- Distance Computation - Euclidean, Manhatten, Cosine, Earth movers, wards, minikowski
+
+1*n matrix is a vector 
+
+Euclidean => Sqrt(sqr(x1-x2)+sqr(y1-y2))
+
+accuracy=(total number of predicted o/p from testset matching with testset o/p)/(total testset data count) 
+1-accuracy = error rate 
+
+Finding right value of K ==> ELBOW Method 
+---------------------------
+K = 1 to 20 
+{
+
+Create Model 
+Calculate accuracy
+repeat
+}
+
+Select K for Max accuracy 
+build model and see higher accuracy is selected for K 
+
+Class imbalance dataset (There is no equal class representation of data) - SMOTE(Synthetic Minority Over-sampling Technique), NearMiss => Makes imbalance Dataset to balance dataset 
+
+Python 
+--------
+
+from sklearn import datasets ==> To import iris dataset 
+from sklearn.metrics as sm ==> To calculate accuracy 
+
+iris = datasets.load_iris() => Arrays 
+iris.feature_names
+data.index.name = 'number'
+data.select_dtypes(include ='object') 
+iris.target 
+iris.target_names
+x=pd.DataFrame(iris.data)
+x.columns=['Sepal length',....]
+y=pd.DataFrame(iris.target)
+y.columns = ['Target']
+
+from sklearn.neighbors import KNeighborsClassifier 
+Classifier = KNeighborsClassifier(n_neighbors=5)  => This has model ##also we can set ex-(metric='minikowski')
+Classifier.fit(X_train,y_train)   ##n_jobs does parallel processing 
+
+y_pred=Classifier.predict(X_test)
+
+df_c=pd.concat([y_pred.reset_index(drop=True), y_test.reset_index(drop=True)],axis=1) => Concatenate pred and actual test labels(O/Ps)
+
+from sklearn.metrics as accuaracy_score 
+accuaracy_score(y_test,y_pred)
+
+error=[]
+for i in range(1,40):
+    knn=KNeighborsClassifier(n_neighbors=i)
+	knn.fit(X_train,y_train)
+	pred_i=knn.predict(X_test)
+	iter_acc=accuaracy_score(y_test,pred_i)*100
+	iter_err=round(float(100.0-(iter_acc.astype(float))),2)
+	error.append(iter_err)
+error    => Whichever is minimum error that K value is selected (if there are multiple 0 errors then select first 0 error) 	
+
+plt.figure(figsize=(12,6))
+plt.plot(range(1,40),error, color='red', linestyle='dashed', marker='o', markerfacecolor='blue', markersize=10)
+plt.title('Error Rate K Value')
+plt.xlabel('K Value')
+plt.ylabel('Mean error')
+
+KNN are lazy classifier => Does nothing during training time just stores and does calculation during test time 
+
+Disadvantages
+The algorithm gets significantly slower as the number of examples and/or predictors/independent variables increase.
+
+Can be used in Recommender systems
+Store the training data and k value in production. 
+
+Crisp DM => Data science model 
+
+KNN Regression 
+----------------
+
+KNN can be used in both regression and classification. 
+
+KNN Classification - Euclidean distance with training data => K nearest features => Take mode of K nearest features => Accuracy here is calculated by matching predicted and actual divided by total test data 
+KNN Regression  - Euclidean distance with training data => K nearest features => Mean of K nearest features => Accuracy here is calculated by measuring RMSE
+
+RMSE(Root Mean Square Error) = Square root of (average Sum of squared distance(difference between actual and predicted)) ==> This value should be minimum for high accuracy 
+
+Data preprocessing
+--------------------
+
+1) df.isnull().sum() => Finding sum of null values (NaN or NULL not blank) in dataset 
+2) Replacing null values with mean/mode  ==> IMPUTING 
+
+mean=df[ítem Weight'].mean()
+df['ítem weight'].fillna(mean,inplace=True)
+                           |
+						mode[0]
+3) Drop columns not useful for building model 
+
+df.drop(['Iteam_Identifier', 'Outlet_Identifier'],axis=1, inplace=True)
+
+4) Label encoder => Takes nominal value and converts it into numerical values (Sklearn.preprocessing)
+ordinal has rank => We can use label encoder 0, 1, 2, 3
+cardinality => Number of unique values 
+df = get.dummies(df)  => adds columns for all different categorical data (ex - 01000)
+df = get.dummies(df)  => adds columns for all different categorical data (ex - 01000)
+
+5) Training and Test dataset splitting 
+
+6) Split input and output columns 
+
+7) Scaling => MinmaxScalar, Standard, Robust scaling 
+Both train and test data needs to be scaled 
+
+from sklearn.preprocessing import MinMaxScaler 
+scaler=MinMaxScaler(feature_range=(0,1))
+
+x_train_scaled=scaler.fit_transform(x_train)
+x_train=pd.DataFrame(x_train_scaled)
+
+x_test_scaled=scaler.fit_transform(x_test)
+x_test=pd.DataFrame(x_test_scaled)
+
+#######################################################################################################################################################################################
+
+To reduce computation cost
+
+Radius Neighbour Classifier - 
+---------------------------------
+
+Implements learning based on number of neighbors within a fixed radius r(specified by user) of each training point. 
+This method is not effective when data is sparse and many features. 
+
+Optimum K 
+-----------
+We cant use K=1 since any other class can comes nearest to the point from different samples
+K=size of dataset also not possible since this means majority of class gets assigned. 
+
+KD Tree based nearest neighbor
+---------------------------------
+Approach to find nearest neighbors using distance between the query point and all other points is called brute force. Becomes time costly and inefficient with increase in number of points.
+KD tree reduce time from N^2 to DlogN (D is number of dimensions) => This method is ineffective when D is large. 
+
+Distance 
+-----------
+By default KNN uses Minkowski distance. 
+
+1) Minkowski
+2) Euclidean 
+3) Manhatten 
+4) Mahalanobis 
+5) Cosine 
+
+Based on data ditribution we decide distance metric to be used. 
+
+Advantages 
+--------------
+Makes no assumption about distribution of classes in featur space
+Not impacted by outliers 
+Works for multiclassification 
+
+Disadvantages
+----------------
+Finding the optimum value of K 
+Will not be effective when class distributions overlap
+Computationally intesive. Can be addresses using KD or Radius Neighbour algorithms.

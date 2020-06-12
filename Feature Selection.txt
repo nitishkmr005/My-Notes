@@ -1,0 +1,192 @@
+########################################################################################################################
+
+													CRISP-DM
+
+########################################################################################################################
+
+Crisp-DM model for ML (Like agile,waterfall)
+
+Once model is ready => Deploy it => create api and use Flask and Jango to access 
+
+Crisp-DM
+----------
+"Problem Description"
+"Data Validation "
+EDA
+"Feature Engineering"
+"Feature Selection"
+"Model Building"
+"Model Performance Tuning"
+"Model Testing and Validation"  => Model Accuracies, Overfitting/Underfitting 
+"Model Deployment"   
+Recalibration
+
+Challenges in Data Validation - 
+---------------------------------
+Data is not enough for solving problem statement, 
+Primary key not available between two data sources (like linking data between pan/adhar)
+Exposing confidential data (Data Masking) => Open Pseudomasking 
+Different data formats => Put the data in Analystics Base Table(ABT)
+If csv format need to ask for correct delimiter format
+Not able to extract data 
+Missing data dictionary 
+
+EDA 
+------
+Finding Missing data
+Normal or not (right/left skewed)
+box plot 
+data type 
+balanced or imbalanced data 
+frequency of categorical data 
+correlation of feature and target (More than 0.7) 
+Outliers
+Duplicates
+Integer or not 
+
+########################################################################################################################
+
+												Feature Engineering
+
+########################################################################################################################
+Get as many features as possible 
+Imputing missing data  => Impute value of salary by grouping similar employees => Impute with means/median/mode and build model and selct model which has high accuracy 
+Correlation and causation (few cases we cant delete if its higly correlated) 
+Add features if given features are not enough (for this domain expertise is important)) 
+
+4 types - 
+
+1) Imputing data, 
+2) Business features (Domain expertise), 
+3) Mathematical features (using polynomial features) and 
+4) Derived features 
+
+Combine the columns (using mathematical operator) to get new feature 
+Interaction features / Polynomial feature function (Combining features- X, Y => X^2, Y^2, XY, X*(Y^2)) => Multiplication gives better result than addition (Statician proved)
+
+Derived features => Deriving day/month/holdiay/time/strike or storm on that day  from date column (in sales dataset), from location derive income/population/age in that location 
+
+Plotting with propotions of male,female survived is correct (dont go with absolute always go with proportions)
+TSNE library => Converts Multi dimentional data into lower dimention (like length and width columns to area) => For visualizing more than 2 dimentions
+Multicolinearity means correlation is more between two features 
+regular expression => To extract certain titles from name 
+
+Descritization 
+---------------
+This is derived features 
+Grouping range of values to single group => Reduces cardinality of the column 
+qcut command for doing descitization => 0 to 100 converts to 0-24, 25-30 (O/P is categorical) Ex for age or for Fare 
+After deriving columns from Descritization, drop those columns 
+
+Interaction_only=True in polynomialFeatures command means it selects only XY not X^2 or Y^2
+
+########################################################################################################################
+
+												Feature Selection 
+
+########################################################################################################################
+
+Feature Selection 
+------------------
+Not correlated to the target 
+Eliminate the noise 
+Do Chi square of features on target 
+PCA => Ex - Converts 25000 columns to 3 columns 
+One feature many not have influence on target but it can combine with other feature and influence the target => Univariate Filter
+
+1) Forward Selection   X1 build model, X1+X2 build model..check accuracy and selects whichever has high accuracy 
+2) Backward Selection  From X1,X2,X3 drop X3 and check model accuracy => If accuracy is reduced keep the feature 
+3) Mixed Selection     Build model for all possible combination of features and get combination of features that yielded high accuracy 
+
+Mixed is not practical with single core but in distributed computing its possible 
+Random Forest/XG Boost helps in selecting features => This is practically used 
+
+Information Gain 
+Chi Square 
+Entropy 
+
+Feature tools package => Helps to create derived features 
+Mlxtend package 
+
+Principal Component Analysis (PCA)
+-----------------------------------
+Use PCA only when there is strong correlation between indepenant features(i.e. Linear relation).
+
+PCA tries to increase S/N ratio and eliminates redundant dimentions.
+
+1) Apply Z- score to indepenant variable and make the data standard. i.e. shift the data to origin. 
+2) Generate covariance/correlation matrix 
+3) Perform Eigen decomposition. A=[[1 0.98],[0.98 1]] => Has information content. I=[[1 0],[0 1]] => Has no information content. 
+4) Tries to transform A to I => Results into eigen vectors. Eigen vectors (They are called as principal components=>90 degrees to each other) are new dimention of new methematical space. 
+   Transformation is a rotation of axes in mathematical space. 
+5) The amount of spread or variance captured across eigen vector 1 is eigen value 1. 
+6) Covariance of eigen vectors will be => [[1 0],[0 1]]. 0 indicates no information in mathematical space. 
+
+
+SNR=variance of signal to variance of noise 
+
+Covariance Matrix for X,Y,Z = [[cov(x,x) cov(x,y) cov(x,z)],[cov(y,x) cov(y,y) cov(Y,z)],[cov(z,x) cov(z,y) cov(z,z)]] = A*A(transpose) => Pairplot 
+
+PCA for dimentionality reduction 
+---------------------------------
+
+Instead of dropping any one feature betwenn two strongly correlated features, create new dimention and drop both dimention. 
+PC1 has high eigen value (high information content) 
+1) Sort eigen values in descending order (largest on top). 
+2) Plot cumulative eigen value graph. 
+3) Eigen vectors with less contribution to total eigen values can be removed from analysis. 
+
+PCA done indepenant variable not with target variable. 
+Number of eigen vectors = Number of indepenant variables 
+Eigen vector connecting two farthest points and it is projection on original mathematical space. 
+Principal component cannot be interpreted since it is combination of all the features. 
+
+Principal component is also used for data compression in image compression. 
+
+Recurrent feature elimination(RFE) - 
+-------------------------------------
+Prerequisite - Pre decided model 
+
+1) Forward selection => Type of stepwise regression which begins with an empty model and adds in variables one by one. 
+2) Backward elimination => Space complexity is high since we started with loading entire features 
+3) Mixed selection => Not used much because of complexity
+
+4) Univariant feature selection        => Takes one feature at a time and compares with target 
+
+test = SelectKBest(score_func=chi2, k=4)
+fit = test.fit(X, Y)
+
+5) Feature Importance in Random Forest => More closer to root node in decision tree and more the times it is used => Higher the importance of the feature 
+6) Ensemble way of getting features    => Features commonly used between models is selected (Stacking)
+7) PCA                                 => Big data issue(for memory efficient), reduce dimensions 
+
+Autoencoding as non linear way and PCA as linear way 
+
+RFE => Does backward elimination => Eliminates features one by one 
+
+model = LogisticRegression()
+rfe = RFE(model, 3)
+fit = rfe.fit(X, Y)
+print("Selected Features:",fit.n_features_) 
+print("Feature Ranking:",fit.ranking_)
+print("feature selected:",fit.support_ )
+
+Try out different models => No Free lunch theorem 
+
+autosklearn 
+-------------
+Not available on windows 
+
+TPOT 
+-----
+Available on windows 
+
+tpot = TPOTClassifier()
+tpot.fit(X_train, y_train)
+tpot.score(X_test, y_test)
+
+AUTOML
+--------
+Internally it does GRID Search and Random Search 
+
+########################################################################################################################

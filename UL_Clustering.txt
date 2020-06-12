@@ -1,0 +1,129 @@
+Unsupervised Learning 
+------------------------
+- Advanced EDA 
+
+https://drive.google.com/drive/folders/1mtnkxzYXE8LkytolqvVECRKjUtEAwgH4 => Unsupervised Learning Material 
+https://archive.ics.uci.edu/ml/datasets/Statlog+(German+Credit+Data) => Data for clustering 
+http://shabal.in/visuals.html => Clustering visualiztion 
+
+Clustering - K Means and Hierarchial 
+Ensemble - Decision Tree 
+
+Cluster the data and for each different cluster build supervised learning model (UL+SL => Semi-Supervised Learning)
+
+While building clustering hide labels and after clustering use labels for SL 
+Clustering can detect outliers 
+Cluster can be defined by centroid 
+Learns Centroids positioning 
+If distance is same it assigns centroid randomly 
+There can be unbiased clustering (Centroid is asigned very less data points and other cluster is assigned more data points) 
+Model should be rebuild over time (If new data points starts building away from cluster centroid) with batch/online training 
+No concept of test data in unsupervised learning
+Pair plot can tell approx. how many clusters hidden in the data 
+Scaling is must for Clustering 
+Clustering used for labeling whole cluster data points if we know label of one datapoint in the cluster (Ex - in Facebook photo tagging) 
+
+Examples - 
+-----------
+cars dataset can be clustered into small, medium and large cars => Apply SL algorithms on these clusters and it will be far more accurate than without clustering 
+Loan Default => Cluster into different kinds of loans (Salary can be zero for education loans) 
+Jio => Clustered into high roaming customers (Kind of outliers and monitor the change in volume and provide service based on that) 
+
+K Means Algorithm 
+------------------
+
+1) Randomly choose K data points (Initialize K cluster centroid) 
+2) Assign each data point to a Cluster 
+3) Re-position the centroids
+4) Repeat steps 2 and 3 until no new assignments happen or cluster centroid stop moving 
+
+SSE/Intertia = Sum from i to n (di^2) (Should be minimum) 
+
+1) Elbow Method 
+-----------------
+
+Used to find optimal value of K (Even after increasing K there is not much significant change in Intertia) 
+
+2) Pair plot 
+--------------
+
+Minimum number of clusters = Max # of peaks 
+Max number of clusters = Product of the peaks 
+
+V1 V2 pair plot => V1 vs V1 (3peaks) V2 vs V2(2peaks) => (3,6) # of cluster range 
+Customer spending money and spending time in online shopping (Low, medium, high spenders => Money & High, Low time => Time) 
+
+Useless dimension/feature for clustering if there is only one peak in pair plot (Check clsutering on this demention and verify) 
+Check clustering on each features 
+
+Box Plot
+------------
+In box plot, boxes should be seperated for cluster to be good cluster  (no overlap of box plots between clusters) 
+
+3) Silhouette analysis for K-means clustering 
+----------------------------------------------
+
+Silhouette coefficient of a point = (B-A)/(max(B,A))
+
+B => Average distance of point from all the points in nearest cluster  => Ideally it should be very high => Distinction 
+A => Average distance of point from all the points in same cluster     => Ideally it should be very low  => Compact cluster 
+
+If elbow graph is stright line going down then its of no use in calculating K 
+
+Typically in -1 to +1 range 
+Silhouette coefficient should be high for the cluster point else cluster dont belong to that cluster 
+-ve Silhouette means data point is very near to nearby cluster 
+Average Silhouette should be high and Silhouette score of cluster should be more than average Silhouette.
+
+If peak is flat, it can have multiple peaks 
+
+Online Retail Dataset - 
+https://archive.ics.uci.edu/ml/datasets/Online+Retail#
+
+CID 
+Recency
+Frequency => Groupby CID and take unique values of invoice 
+Monetory  => Groupby CID and take sum of product of quantity and unit price
+
+Hierarchical Clustering
+------------------------
+||||||||||
+Agglomerative
+Divisive 
+
+Distance between clusters 
+||||||||||||||||
+1) Minimum distance 
+2) Maximum distance
+3) Average distance
+4) Centroid distance 
+
+Single-Linkage Clustering: The Algorithm
+------------------------------------------
+
+https://home.deib.polimi.it/matteucc/Clustering/tutorial_html/hierarchical.html
+Clustering Italian cities based on distance
+
+Dendogram distance
+If vertical distance is very high clusters are far away 
+Different types of linkage means different dendograms (ward or centroid) => ward is popular linkage technique 
+
+Ward Linkage Method 
+----------------------
+
+n_unit
+--------
+If we execute K means we get different solutions so we use n_unit=5 (Run the algorithm 5 times and get optimal(least) SSE) 
+Depending on starting point of centroid we get different solutions 
+
+DB Scan 
+----------
+K means works very well for data Spherical in nature 
+DB scan works for non spherical clusters 
+https://scikit-learn.org/stable/modules/clustering
+Forms cluster based on density 
+
+Usually K means algo is enough since after normalizing it becomes spherical 
+
+MiniBatchKmeans 
+------------------

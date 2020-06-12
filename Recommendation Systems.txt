@@ -1,0 +1,93 @@
+Recommendation System
+-----------------------
+
+Data Visualization tools - 
+
+Tableau 
+PowerBI => From Microsoft 
+QLIK sense and QLIK view (main) 
+
+Supervised => Time Series => Collecting data of rainfall from past 100years..Trend,Seasonality,Random 
+Unsupervised => ARD (Associate Rule Discovery => Introduced in 1994)
+
+NTD => Non Traditional Data 
+|||||
+Images 
+Text
+Audio
+
+Python 
+||||||
+Azure ML 
+Big ML 
+Tableau 
+
+Recommendation System Types - 
+--------------------------------
+
+- Popularity Based
+- Content Based  
+- Collaborative (Suggest what other customer has bought)
+- Hybrid (Content+Collaborative) 
+
+Recommendation system needs - 
+User ID, Item ID, Rating 
+
+Content Based in Tableau - 
+---------------------------
+Dashboard > Action > Add Action > Filter  
+
+https://bigml.com/dashboard/sources
+------------------------------------------
+1-click dataset 
+
+azureml.net
+-------------
+
+Microsoft Azure Machine Learning Studio (classic)
+https://studio.azureml.net
+
+Collaborative Recommendation System 
+---------------------------------------
+
+Similarity Types - Jackard, Cosine, Correlation 
+ML problems - Multicolinearity, overfitting, data has to be dynamic 
+
+AZUREML works on cosine similarity
+
+Jackard Similarity 
+--------------------
+Problem - Ignore the value of the rating 
+
+Cosine Similarity
+--------------------
+Problem - Treats missing rate as negative 
+Smaller the angle between the vectors => Similar are the vectors, orthogonal vectors are not similar 
+Tensorflow => COllection of dataframes 
+
+Utility Matrix 
+Single Value Decomposition (SVD)
+
+1) Extracting data - Webscrapping, or by api 
+2) Cleaning data 
+3) DTM (Document Term matrix) => Breaks the sentences into unigram (one word) => Each word is considered as column 
+4) Get TF*IDF 
+Distance between movies using unigrams 
+
+Term Frequency = Count of word appears/total number of words 
+Inverse document Frequency(IDF) = log(total number of documents/number of docs that mention term i)
+
+Association Rule Discovery(ARD)
+---------------------------------
+If A=>B
+
+Support, confidence, lift 
+Lift => Higher the lift better it is 
+
+Install rake-nltk package
+Install scikit-surprise 
+
+Convert the problem to user id, item id, rating 
+
+- AzureML 
+- Surprise 

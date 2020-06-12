@@ -1,0 +1,228 @@
+Deep Neural Networks
+-----------------------
+
+1) MCP(McCullohPitt) neuron 
+
+=> By changing threshold, we can make nearons to mimic AND,OR gates (Threshold was given manually) - no bias and equal weights 
+
+2) Rosenblatt 
+
+=> y=w1x1+w2x2+Bias*w3   y-y'=E E is tried to minimise by controlling weights (perceptron) (-ve=>Not for all the gates (Ex- cant learn XOR gate) 
+
+Transformation is done using step function (but now we use non linear functions)
+
+- XOR is not linearly seperable but AND,OR,NOT are linearly seperable (In real world datasets are not linearly seperable) 
+- When we project the data from lower dimension to higher dimension, data becomes linearly seperable 
+- Instead of one neuron, collection of neurons can be used to implement all the gates 
+- Cover's Theorem 
+- Kolmogorov Theorem 
+
+dot function => * and + together (w1x1+w2x2+Bias*w3=w.x) 
+
+ANN
+-----
+Output Layer - One neuron (Binary Classification) 
+
+Fully connected dense neuron network 
+Sparsely connected neuron network 
+
+- Hyperparameters - Number of layers, Number of neurons per layer 
+- Each neurons will be doing matrix operations followed by nonlinear function transformation (ReLU stands for rectified linear unit => Nonlinear activation function)
+- More neurons => Projecting them to higher dimension space makes data linearly sepearable 
+- Deep layers gives less neurons than shallow layers 
+- Based on errors, Back propagation adjusts/optimise the weights using Gradient Descent (Initially weights will be set to random) 
+ 
+Perceptron disadvantage - Data should be linearly seperable, cant handle XOR gates which are not linearly sepearable, Decision line is close to data point, single neuron without nonlinear activation functions 
+ 
+Neural networks are called universal approximation 
+
+Activation Functions - 
+----------------------
+- Whether to fire or not 
+- Types - Piecewise linear functions and Smooth Functions 
+
+ReLU => f(x) = 0 for x<0
+	         = x for x>=0
+			 
+tanh(x) = 2/(1+e^(-2x)) - 1
+
+PReLU => f(x)=ax for x<0
+	         = x for x>=0
+			 
+ELU (Exponential Linear Unit) => f(x) = a((e^x)-1) for x<0
+								      = x for x>=0
+
+SoftPlus => f(x)=log(1+e^x) 
+
+Across the layers activation functions can be different but activation function is same within the layer 
+
+SoftMax Function - 
+-------------------
+- For multiclass classification, we need multiple output neurons 
+- To make neuron dedicated to particular class, convert output to onehot encoding (Like 0 => 1000000000, 1 => 0100000000)
+- To convert number generated at output neuron to probabilities, we send it to ( e^(R)/(Sum(e^(R))))
+- This transformation to probabilities is SoftMax function 
+- Output of probabilities can be used to calculate errors. 
+
+Forward Propagation => Input data is propagated forward from the input layer to hidden layer till it reaches final layer where predictions are emitted
+Loss Function (Mean Square Loss) 
+
+Keras and Tensorflow 
+---------------------
+Keras makes use of Tensorflow (from google)
+Pytorch from facebook 
+
+Direct Acyclic Graph => Lazy execution 
+Eager execution in Tensorflow 2.0 (Tensorflow + Keras) 
+
+Tensorflow makes use of GPU (uses CUDA library)
+ 
+Two ways in building NN -
+1) Functional 
+2) Sequential 
+
+In deep neural network we use dense and in CNN there are other types 
+Output layer should have sigmoid activation function 
+Xavier method of initializing weights 
+
+Epochs => Number of times NN reads training dataset 
+Leverage point => Outlier not visible in any of the univariate analysis => Use of clusters can detect leverage points 
+Batch Size => Dataset 
+
+- one epoch = one forward pass and one backward pass of all the training examples
+
+- batch size = the number of training examples in one forward/backward pass. The higher the batch size, the more memory space you'll need.
+
+- number of iterations = number of passes, each pass using [batch size] number of examples. To be clear, one pass = one forward pass + one backward pass (we do not count the forward pass and backward pass as two different passes).
+
+Example: if you have 1000 training examples, and your batch size is 500, then it will take 2 iterations to complete 1 epoch.
+
+Optimizer - adam,sgd
+NN are prone to local minimas.
+Weights initialized decides accuracy of the model 
+Increasing epoch will not help if point is struck at flat surface 
+
+Chain Equation - 
+
+Change in weights of one layer is not considered in changing weights of another layer 
+Slope is too steep => Take small steps else if it flat take large steps (Learning step) 
+
+dE/dO*dO/d(NLT)*..
+
+Bad features add noise to the data 
+
+Transfer Learning => Already trained on different dataset and borrow it 
+
+Tensor 
+--------
+Rank
+Shape
+Dtype 
+
+######################################################################################################################################################################################
+
+																	Deep Neural Network Hyperparameter tuning 
+
+######################################################################################################################################################################################
+
+Neural networks are known as universal approximators 
+
+Challenges in DNN 
+
+- In real world, error is non-convex 
+  In classification, because of distribution of classes causes non-convex 
+- Number of dimensions vs number of data points (curse of dimensionality) 
+- Vanishing/Exploding Gradient 
+- Easily become overfit 
+- Computation problems 
+- Local minima, Flat regions and saddle points are challenging 
+
+Dense neural networks cannot work on volumes (but CNN works) so we need to convert it to vector using flatten layer 
+Number of neurons per layer is width of the layer 
+Digital Noise => It was removed in mnist but not in fashion_mnist (Variation in pixel intensity) 
+Generalize model => Boxplot of validation and training are overlapping => No overfit 
+With Small batch size, model becomes overfit and also unstable 
+
+sgd for flat regions will be lost 
+
+Given the size of flat region => Number of epochs given is not enough 
+
+Optimizer 
+----------
+
+First Order Gradient Descent 
+Second Order Gradient Descent => We follow the curvature of the surface 
+
+First Order Gradient Descent with learning rate works same as Second Order 
+Combine vectors which are pointing to where error increases => Point should go opposite to this direction 
+BFGS optimizer uses second order Gradient Descent 
+
+First Order Gradient Descent - 
+
+1) Batch Gradient Descent  
+2) Stochastic Gradient Descent (SGD)  => Pick one record randomly at a time 
+3) Mini Batch Gradient Descent 
+
+Imporvement of SGD is Momentum 
+
+- Momentum - 
+Momentum suppresses the oscillations 
+
+- Nesterov Accelerated Gradient(NAG) - 
+
+- Adag => Why should we have same learning rate in all directions 
+If Gradient is small (Flat surface) => Large learning rate 
+If Gradient is large  => Smaller learning rate 
+Spiralling down rate is faster 
+We change learning rate based on gradient 
+-ve => rapidly decreasing learning rate 
+
+- RMSProp (Root Mean Square) - 
+As "accumulated historical Gradients from start" increases learning rate starts decreasing in Adag optimizer
+Here we consider accumulated gradient over a time window not from start (like past 3 gradients) 
+Not smooth error function 
+
+- Adadelta - 
+Somewhat Similar to RMSProp 
+
+- Adam => Adds a momentum term to RMSProp 
+
+Dropout 
+--------
+
+Use dropout only for deep neural network 
+Dropout is a regularization technique for neural network models 
+Dropout is a technique where randomly selected neurons are ignored during training stage. They are “dropped-out” randomly. 
+They do not contribute to the activation of downstream neurons temporally i.e. they are temporarily removed in the forward pass
+They are not considered for any weight updates on the corresponding backward pass.
+
+kernel_constraint = MaxNorm(2) - 
+When one neuron is switched off and other neurons learn with higher weights then it overfits. So kernel_constraint will restrict weights to not increase more than 2.
+
+Weight Initialization
+-----------------------
+
+Picking weights from density ditribution picks up weights mostly from central tendancy => new method for weight initialization LeCun uniform, Glorot (a.k.a Xavier) uniform
+uniform distribution have all weights getting picked up with equal probabilities
+
+# To handle exploding gradient we use gradient clipping 
+
+Loss Functions - 
+------------------
+Hinge loss does maximum margin classifier
+
+Regression Loss Functions 
+Mean Squared Error Loss
+Mean Squared Logarithmic Error Loss
+Mean Absolute Error Loss
+
+Binary Classification Loss Functions 
+Binary Cross-Entropy
+Hinge Loss
+Squared Hinge Loss
+
+Multi-Class Classification Loss Functions 
+Multi-Class Cross-Entropy Loss
+Sparse Multiclass Cross-Entropy Loss
+Kullback Leibler Divergence Loss
+

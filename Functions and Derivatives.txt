@@ -1,0 +1,57 @@
+Functions and Derivatives 
+--------------------------
+
+Derivative of function gives slope at each point of x 
+If derivative of function at point (x,y) is zero then that point is minimum/maximum of function 
+If double derivative is +ve it is minimum elseif it is negative then it is maximum.
+
+Convex function => y=ax^2
+Concave function => y=-ax^2
+
+Double derivative tells how far the minima might be from a given point 
+
+Gradient of a function of a vector 
+-----------------------------------
+- Derivative wrt each dimension, holding other dimensions constant 
+- At a minima or a maxima the gradient is a zero vector 
+
+Hessian of a function 
+----------------------
+If all eigenvalues of a Hessian matrix are positive, then the function is convex (Having minima). 
+
+Vector valued functions and Jacobians 
+--------------------------------------
+
+Relationship between Hessian,Jacobian and Gradient
+---------------------------------------------------
+Hessian is the transpose of Jacobian of the Gradient 
+
+Optimizing a continuous function 
+----------------------------------
+
+Gradient Descent 
+----------------
+Following slope can reach a point to local manima not global maxima 
+Gradient descent with learning rate works only for single minima not for multiple minima 
+
+Momentum 
+---------
+Using the memory of previous step to build up speed or to slow down with forgetting factor 0<=alpha=1
+
+Saddle Points, Hessian and long local furrows
+----------------------------------------------
+Saddle point are points where one dimension slopes up and another slopes down.
+If atleast one eigen value of Hessian matrix is negative then its not convex 
+
+Simple Gradient gets struck at saddle point and local minima => We use momentum 
+
+Adam Optimizer 
+----------------
+Advnced technique of using momentum,inverse Hessian matrix is Adam Optimizer (Without calculating inverse of Hessian matrix which is expensive operation) 
+To solve saddle point and local minima
+
+Loss Function 
+----------------
+E = (Predicted - Actual)^2
+
+Optimazation algorithms tries to minimize this function to 0. 

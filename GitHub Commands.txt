@@ -1,0 +1,152 @@
+GitBash
+---------------
+Set User name ==> 
+git config --global user.name "Nitishkmr"
+git config --global user.name
+
+Set Email id ==> 
+git config --global user.email "nharsoor048@gmail.com"
+git config --global user.email
+
+nitishkmr005
+
+push an existing repository from the command line - 
+
+git remote add origin https://github.com/GreatLearningAIML1/bangalore-sep19-aiml-ml-batch-nitishkmr005.git
+git push -u origin master
+
+import code from another repository - 
+
+You can initialize this repository with code from a Subversion, Mercurial, or TFS project.
+
+####################################################################################################################
+
+Git setup and configuration
+----------------------------
+
+git-scm.com > Install Git for windows 
+
+- git version 
+- git help 
+- git help config 
+- pwd  													   => /c/Users/nitis 
+- git config --global user.name "Nitishkmr"  			   => Configure User and Email
+- git config --global user.email "nharsoor048@gmail.com"
+- git config --global --list  							   => Listing All Global Configuration Settings
+- cat ~/.gitconfig                                         => Seeing Git's User-based Config file
+
+Working with git locally 
+-------------------------
+The git init command creates a new Git repository. It can be used to convert an existing, unversioned project to a Git repository or initialize a new, empty repository.
+
+pwd
+cd Git_Project/
+pwd  				   => /c/Users/nitis/Git_Project
+git init git-demo      => Initialized empty Git repository in C:/Users/nitis/Git_Project/git-demo/.git/
+ls
+cd git-demo 
+ls
+ls -a
+
+Starting with an existing project 
+----------------------------------
+pwd
+cd projects/
+cd website/
+ls
+git init
+
+Present Workding Directory  => pwd
+Change Directory            => cd folder-name
+Git initialization          => git init [project-name]
+project-name parameter is optional. If not supplied, Git will initialize the current directory.
+
+First Commit Commands 
+----------------------
+pwd
+ls
+subl Demo.txt   //* .txt can be created outside and use this command to open the file and modify 
+ls
+git status
+git add Demo.txt   //* Initially it will be untracked file(Git is not actively managing it) so add will do it.
+git status
+git commit -m "Initial commit"
+clear
+git status
+
+add and commit at once 
+------------------------
+git commit -am "Commit message"   //* a => Add, m => message 
+
+To backout the changes done from staging area  
+-----------------------------------------------
+Make the changes to Demo.txt and add it but dont commit 
+
+git add Demo.txt
+git reset HEAD Demo.txt  => Backout the changes 
+git checkout -- Demo.txt => Discards the changes and file will be returns to old 
+
+Gitting Historical 
+--------------------
+To display all commits done till now 
+
+git log 
+git help log 
+git log --online --graph --decorate --color 
+
+Backout changes from already commited (Removing the file) 
+----------------------------------------------------------
+git rm Second_Demo.txt  => File will be deleted 
+git status 
+
+To make it permanent 
+git commit -m "Removing Second_Demo.txt"
+
+OR 
+
+rm Second_Demo.txt  //* Deleted but not staged for commit yet (Removing a file using Terminal)
+git add -u          //* Updating Git's Index (staging area)
+git status 
+git commit -m "Another way of removing file"
+
+Moving files to another folder 
+--------------------------------
+Create Folder 
+
+mkdir new_demo
+ls
+git mv Demo_1.txt new_demo 
+cd new_demo/
+pwd
+cd..
+git commit -m "Commiting rename"
+
+Going Remote 
+-------------
+cd ~ => Goes to home directory 
+mkdir .ssh
+cd .ssh/
+ssh-keygen -t rsa -C "nharsoor048@gmail.com"  => Generates ssh key 
+ls -al => Shows all the files een hidden files 
+
+Files - 
+id_rsa 
+id_rsa.pub => Public side of the files 
+
+qwerty0481 => Passphrase 
+
+Once ssh key was added to hithub, 
+ssh -T git@github.com  => Verify SSH authentication
+
+git remote add origin git@github.com:nitishkmr005/demo-repo.git
+git remote -v 
+git push -u origin master  => Git writes all information to remote repository (-u is used only initially) 
+
+Push files from local to remote repository
+-------------------------------------------
+Add a new file to local repository 
+git add Demo_2.txt
+git commit -m "File updated to remote repo"
+
+git pull origin master 
+git push origin master  => Pushes files from local to remote repository 

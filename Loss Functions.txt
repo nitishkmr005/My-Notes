@@ -1,0 +1,52 @@
+Loss Functions 
+-----------------
+
+Regression with continuous output - MSE, log MSE, MAE 
+Classification with probabilistic output - Cross Entropy, Hinge Loss 
+Similarity between vectors or clustering - Euclidean distance, cosine 
+
+MAE loss is less affected by outliers than MSE 
+
+Cross Entropy Loss - 
+---------------------
+Cross Entropy loss for binary classification 
+
+Loss = - {-ylogf(x) + (1-y)log(1-f(x))} 
+
+Tikhonov Regularization 
+NN History 
+
+- Invariant to Illumination 
+- Invariant to viewpoint 
+- To deal with Occlusion 
+- Invariant to deformation 
+- To deal with background clutter 
+- To deal with Intra-class Variation (FOX may look similar to dog) 
+
+Traditional KNN approach to mnist classification 
+-----------------------------------------------------
+Voronoi Tesselation 
+K=1 is Voronoi Tesselation 
+Increaseing K reduces variance but increases bias 
+
+L1 distance => Absolute difference between train and test 
+L2 distance => Euclidean distance 
+
+Hyperparameters => K value and L1/L2 distance 
+
+Parametric Approach 
+--------------------
+- Linear Classifier 
+
+RELU is used only for hidden neurons and softmax is used for output neuron 
+Linear activation function for linear regression 
+
+Feed forward neural network 
+
+Backpropagation is efficient method to do gradient descent 
+
+Momentum 
+----------
+=> Usually 0.9 
+
+RMSprop, ADAM, Nestrov momentum 

@@ -1,0 +1,119 @@
+#####################################################################################################################
+										Confusion Matrix
+
+Accuracy  = (TN+TP)/(TN+FP+FN+TP)
+Precision = TP/(TP+FP)
+Recall/Sensitivity/True Postive Rate(TPR)/Type II error = TP/(TP+FN)  => Accepted null hypothesis incorrectly (Type II error)
+False Positive Rate(FPR)/Type I error = FP/(FP+TN)                    => Accepted Alternate hypothesis incorrectly (Type I error)
+Specificity = TN/(TN+FP)
+F1 score    = 2*P*R/(P+R) 
+ROC         => TPR vs FPR graph 
+
+#####################################################################################################################
+
+Unbalanced dataset => Accuracy cant be only parameter to be used 
+
+	       Predicted
+-------------------------------
+	     |  0(H0)  |    1(HA) |
+-------------------|----------|
+Actual 0 | 98(TN)  |   0(FP)  |
+         |         |          |
+	   1 |  2(FN)  |   0(TP)  |
+-------------------------------
+
+Accuracy = (TN+TP)/(TN+FP+FN+TP) =98%
+Precision is ability to predict correctly = TP/(TP+FP) = Undefined
+Recall is ability to detect correctly = TP/(TP+FN) = 0% => Type II error (Should have rejected null hypothesis but accepted it) 
+FPR(False Postive Rate/Type I error) = FP/(FP+TN) 
+
+For ideal model => Precision, Recall and accuracy will be 100% 
+
+FN and FP are inversely proportional 
+
+Examples - 
+For cancer detection, FN is unacceptabe (it should be ideally 0) => Recall should be very high (Not detecting cancer if after having cancer is unacceptable) 
+For Spam detection, FP is unacceptabe (it should be ideally 0) => Precision should be very high (Putting in spam even if its not spam is unacceptabe)
+For Walmart to detect theft FP is unacceptabe => Saying thief even if he is not thief is unacceptabe 
+For Antivirus FN is unacceptabe => Not detecting virus even having virus is unacceptabe (Predict_proba > 1%) 
+
+Actual data has 2C and 98NC 
+
+	       Predicted
+	       0           1
+Actual 0   0(TN)      98(FP)
+
+	   1   0(FN)      2(TP)
+
+Accuarcy=2/100 = 2%
+Precision=2/(100) = 2%
+Recall/True Positive Rate/Sensitivity = 2/2 = 100% 
+
+Type I error(alpha) is FP and type II error(beta) is FN. 
+
+F1 Score 
+----------
+
+F1 score metric takes care of both precision and recall 
+F1 score is harmonic mean of precision and recall 
+
+F1 Score = 1/[(1/P)+(1/R)]/2 = 2PR/(P+R) = 2*2*100/(102)=4%
+
+#####################################################################################################################
+
+								ROC (Receiver Operating Characterstics) Curve 
+
+#####################################################################################################################
+
+TPR vs FPR 
+
+Type I error(alpha) inversely proportional to Type II error
+ 
+We shift the threshold we change the area in alpha region 
+||
+VV
+We increase the value of alpha => Increasing the alpha region 
+||
+VV
+Probability of Type I error goes up 
+||
+VV
+Beta value goes down 
+||
+VV
+Probability of doing type II error goes down 
+
+Diagonal line in ROC => All those thresholds at which performance of the model in TPR and FPR is 50:50 => Random model 
+Objective is to have all the models should stay far away from the line and above the line
+Any model lying below the line => People with diabetes identified as non diabetes and non diabetes as diabetes => In such cases flip the predictions.
+
+1) Near to lower y-axis are conservative models => Models are very strict in declaring as defaulters and alpha region is very small => TPR and FPR are also too low. 
+2) Tip of the curve => Liberal Models => Models will identify anybody as defaulters. => TPR and FPR are high => Type I error increases 
+Objective is to build models which comes very close to top left corner => High power of test. 
+
+Power of Test 
+---------------
+
+Power of the test is a function of attributes we use to build the model => To increase the power of the test select the right attributes where distributions are very tight and class distributions are very far away from each other => Get more data => Higher the power of the test 
+
+Power of the test = 1-Beta => Similar to TPR 
+Beta region is where we incorrectly accept the null hypothesis and 1-Beta is the region where we correctly reject the null hypothesis. 
+
+Optimum threshold 
+-------------------
+
+All algorithms use default cut-off point as 0.5 => This means probability of somebody as defaulter is just above 0.5 model treats as defaulter. 
+There is no way we can change this threshold using any hyperparameter. We build wrapper around the model => We change the threshold from 0.5 to 0.7. 
+
+point closest to top left corner in ROC curve is right cutoff point or right value of alpha. => This is closest to ideal model => At this threshold, combination of TPR and FPR is optimal combination. 
+
+AUC (Area Under the Curve) 
+---------------------------
+
+How much area has been captured by ROC curve of the model. 
+AUC for ideal model is 1.
+
+AUC represents probability of correctly identifying positive cases as positive. => Probability of rejecting null hypothesis when null hypothesis is wrong. 
+Larger the AUC => Better the model in identifying positive cases. => Higher the power of the test. 
+
+#####################################################################################################################

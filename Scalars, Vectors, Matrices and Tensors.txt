@@ -1,0 +1,68 @@
+########################################################################################################################
+
+Scalars, Vectors, Matrices and Tensors 
+
+########################################################################################################################
+Video - 
+
+For grey scale video, Each Frame forms the matrix 
+Next frame then it becomes 3-D 
+3 frames - These 3 dimensions together becomes 3rd order tensor 
+Red pixel - Scalar
+RGB - 3-D vector 
+Row of red pixel - vector 
+
+Matrix
+-------
+.(dot) is matrix multiplication 
+* is elementwise product 
+
+M1=M2.T.dot(M3) 
+M4=linalg.inv(M5) 
+Diagonal Matrix 
+M6=M7.T.dot(M7) => Symmetric Matrix 
+
+.T is transpose of 2-D matrix 
+transpose(M,[1,0]) is for n-dimensional tensors => [0,1] no transpose for 2-D => [0,1,2] for 3-D matrix 
+
+Rank of a matrix
+------------------
+Matrix determinant = 0 => Its not full rank matrix 
+- The rank of a matrix is defined as (a) the maximum number of linearly independent column vectors in the matrix or (b) the maximum number of linearly independent row vectors in the matrix.
+- For an r x c matrix, If r is less than c, then the maxim
+- np.linalg.matrix_rank(M)
+
+Vector Norm 
+-------------
+||x||=(sum(|xi|^p)^(1/p) 
+
+L2 Norm => Euclidean Distance 
+L1 Norm => Manhatten Distance 
+L(infinity) Norm => Max of mod of all the dimensions
+L(-infinity) Norm => Min of mod of all the dimensions
+
+linalg.norm(M)       //*L2 Norm 
+linalg.norm(M,'fro') //*Frobenius norm same as L2 Norm 
+linalg.norm(M,1)     //*Manhatten Distance
+linalg.norm(M,np.inf)//*Max of mod of all 
+
+Cosine between two vectors
+----------------------------
+Cosine is a measure of similarity(direction) of vectors when we want to ignore their magnitudes.
+
+x.y/(||x||||y||)
+=0 for orthogonal vectors 
+
+One hot bit => Atleast one element is one and rest are zero in the vetor(One of encoding) 
+=> Encoding in classification 
+
+from scipy import spatial 
+
+scipy.spatial.distance.cosine(M,2M) => Zero 
+scipy.spatial.distance.cosine(M,-M) => 1.999
+
+Eigen Value Decomposition
+---------------------------
+Only diagonalizable matrices can be factorized in this way
+
+eVal,eVec = linalg.eig(M) 

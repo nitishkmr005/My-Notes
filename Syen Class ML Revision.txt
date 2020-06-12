@@ -1,0 +1,156 @@
+################################################################################################################################################
+
+														Automated Feature Engineering 
+
+################################################################################################################################################
+
+Log Transform 
+---------------
+
+Feature Labs created feature tools 
+CNN also does feature extraction technique 
+Temporal features (data,timestamp) never used => COnverted to day,month,year 
+Apply log tranform(root transform) to right skewed data (income) 
+Apply log tranform to already normal becomes left skewed (-ve skew) 
+Apply square to left skewed data to get normal data 
+ML will see lot of low income which right skewed data 
+For negative number data, log transform will not work => First shift axis by adding positive number to lowest -ve number and apply log transform 
+
+Boxcox transformation 
+-----------------------
+
+stats.boxcox(x) 
+it will not work on negative data 
+
+Featuretools 
+--------------
+
+Uses deep feature synthesis
+Used for multiple tables  
+Entity Set - > 
+
+# featuretools/predict-loan-repayment => Github link 
+# Driverless AI from H2O 
+# Mental Health Tech Survey 
+
+Precision recall tradeoff => To increase recall we can decrease predict.prob threshold from default 50%. => This decrease precision 
+
+Recall => Ability to detect 
+Precision => Ability to predict 
+F1 Score => 2*R*P/(R+P) => Gives high weightage to low value 
+
+Feature importance is built in all models in recent version of sklearn 
+
+################################################################################################################################################
+
+													Model Interpretable 
+
+################################################################################################################################################
+
+Model interpretations done only when issue comes (like actual is o but predicted is 1) => Kind of Support 
+
+Global  
+Local 
+
+ELI5 (Explain Like I'm Five)
+------------------------------
+
+# SGD Regressor in sklearn => Randomly selects data and builds model. Works well for largescale dataset (Computations are optimized) and linearregressor should not be used. 
+
+- Global => => eli5.show_weights(xgc.get_booster())
+
+- Local 
+
+doc_num = 0
+print('Actual Label:', y_test[doc_num])
+print('Predicted Label:', predictions[doc_num])
+eli5.show_prediction(xgc.get_booster(), X_test.iloc[doc_num], 
+                     feature_names=list(data.columns),
+                     show_feature_values=True, top=(7, 8))
+
+Partial Dependance => Global
+------------------------------
+These are global interpretations
+Target variable dependance on particular col keeping remaining columns constant 
+Average of all ICE 
+
+Individual Conditional Expectation(ICE) plot 
+----------------------------------------------
+ICE plots are local interpretations 
+Look at single instance 
+
+################################################################################################################################################
+
+														Model Diagonastics 
+
+################################################################################################################################################
+
+LIME - Local Interpretable Model-Agnostic Explanations
+SHAP 
+
+Local Interpretable Model-Agnostic Explanations (LIME) 
+-------------------------------------------------------
+LIME has no global interpretations 
+ICE plots are local 
+Partial dependance are global 
+Feature Importance is global 
+
+LIME creates interpretable boundaries 
+
+SHAP (SHapley Additive exPlanations)
+-------------------------------------
+Both Global and Local 
+Tools like H2O have built in SHAP 
+Shap values are like predict probas 
+Shapley score 
+
+Shap partial dependance 
+
+Tree Surrogate Model => Model Interpretable technique => Using inputs and outputs, we can model using decision tree 
+
+################################################################################################################################################
+
+Case Study - 
+--------------
+
+---------------------------------------
+	|   Num          |     Cat        |
+---------------------------------------
+Num |  pearson       |  t-test ANNOVA |
+Cat |  t-test,ANNOVA |  Chi-Square    |
+---------------------------------------
+
+RFE => Take all features and build model 
+Apply feature importance 
+
+Apply all above 3 and see which are all features are important 
+
+Feature Hashing 
+-----------------
+Feature Hashing encoding is used If large categorical values (Ex- For Zip Codes) 
+-ves => Collision 
+Given a particular categorical values we can encode it in 6 columns 
+
+For missing values => 50% threshold => More than threshold remove the column 
+For correlation    => 0.6 threshold 
+
+Correlation Graph  => https://www.oreilly.com/radar/ideas-on-interpreting-machine-learning/
+teapot,AutKeras,Autosklearn,Automl 
+All classification models can be used for regression and are non linear 
+Model Performance => fit time and predict time needs to be checked for production data => %%timeit -n 1 -r 5
+
+https://movement.uber.com/?lang=hi-IN => Uber data 
+
+Uber machine learning platform => Uber Michelangelo 
+
+Distance calculation metrics 
+------------------------------
+
+Uber use case => OSRM (Open source Routing machine) to calculate distance between pickup and drop or we can use google map api 
+Distance Metric => Haversine distance metric (very accurate distance metric) 
+
+Weather data 
+---------------
+METAR common source for weather data 
+
+aws sagemaker =>  SageMaker enables developers to create, train, and deploy machine-learning models in the cloud. SageMaker also enables developers to deploy ML models on embedded systems and edge-devices.

@@ -1,0 +1,123 @@
+Ensemble Techniques
+--------------------
+
+These techniques reduces bias,variance errors. 
+
+1) Bagging 
+-------------
+Bootstrap sampling and aggregating (Cant use in imbalanced dataset) 
+1 sample having 10rows we can create 10^10 samples  
+
+Reduces VE 
+Overfitting => High Variance 
+Different data, same algorithm, different models
+Each model is highly overfit and built independantly of each other 
+Any algorithm can be used 
+Faster because models are created parallely 
+Each model will have high variance individually but when combined variance will reduce 
+
+-ve => Limited data hence use Bootstrap sampling 
+
+predicting value will be done majority voting(for CLassification) or average (for Regression) from all models 
+Voting => Hard (default) and Soft (Giving weightage to particular model) voting 
+Bootstrap sampling is referred to as 63.2% sampling (63.2% data is selected for training data from main sample and 36.8% is selected for test data) 
+Probability of Record is not getting selected from n rows = (1-1/n)^n and Lt of n tends to infinity of (1-1/n)^n = 36.8%% (3 rows ---) 
+Random Forest is special case of Bagging 
+
+Unconstrained decision tree (removing max_depth from algorithm) => High bias error and high variance error => Bias towards important features and too many complex tree (fully grown tree)
+n_estimator=51 means 51 models (51 bootstrap samples) => Too much value creates redundancy => Tune it to get less variance in boxplot   
+Whenever we are doing bagging Unconstrained is important for getting highly overfit model (In KNN K=1 for highly overfit model) 
+Too many bootstrap samplings duplicates starts. 
+
+Feature Importance 
+-------------------
+Feature having main impact on target (clf.feature_importance gives important features) 
+Calculated based on entropy (select feature for higher value) 
+Sum of all values equals to 1
+
+Random Forest 
+--------------
+Assumption of Ensemble technique is errors done by each instance of model are not much correlated i.e. they are independant of each other. 
+
+Random Forest is special case of Bagging 
+Along with random subset of data it will have random subset of features (in Bagging ex-Gender is still important feature in all models(biased towards Gender feature)) 
+It selects sqrt(N) number of features at every node 
+Here we are giving different combination of features (Gender(Titanic dataset) is not in every model) 
+Giving equal importance to all features => Reducing Bias (Even lesser bias error but slightly higher variance error compared to Bagging) 
+
+2) Boosting
+------------
+Reduces BE 
+Each model is underfit and dependant on each other 
+Different data, same algorithm, different models 
+
+First instance of model trained with equal weightage and gives classified and misclassified. Second instance gives higher weightage to erroneously classified records. and so on. 
+Different instances are created in sequence. 
+Incorrect records keep getting high weightage and correct records keep getting low weightage. 
+Default number of instances is 100.
+For First instance, classification is easy
+
+- AdaBoost 
+
+Any algorithm can be used 
+Adaptive Boosting (Adapts weights and gives higher weightage to erroneously classified records) 
+Two types - AdaBoost Classifier and Adaboost regressor 
+Model 1 gives equal preference to data => Model 2 has higher weight on data where prediction was gone wrong from model 1  and so on..
+Weighted voting is giving high priority to model which has done less errors. 
+
+GridSearchCV helps in deciding n_estimators. Bagging or boosting if we dont give base_estimator, by default it uses decision tree algorithm. 
+All the Test records will go through all 50 trees and we predict based on majority voter. 
+If we dont use base_estimator, score will drop. 
+Everytime we run this score will change slighly since internally decision tree uses random_state. 
+Decision stump is decision tree with maximum depth = 1.
+too many model instances (n_estimators) overfit. 
+
+- Gradient Boost 
+Only difference it is working on residuals. 
+Based on residual, next model is built 
+Tries to reduce residuals to 0. 
+Combined residual is sum of prediction of all trees. 
+SSE = var * number of elements 
+For classification, we work based on predict.prob
+
+XGBoost is variant of Gradient Boosting.
+In boosting training happens in sequentially and it is slower than bagging. 
+
+3) Stacking
+------------
+Same data, different algorithm, different models 
+Voting classifier, stacking classifier 
+Soft voting is based on average of predict.prob => Always use soft voting 
+Hard voting is based on majority voting 
+Hard voting can give majority as survived but soft voting can give high average prob for not survived. 
+
+Stacking classifier => 
+We can give predict.prob of different models to Random forest(Predictions becomes features) and give final predict value. 
+Each model should be good. 
+
+#Autosklearn => Internally decides best algorithm and TPOT also works same way 
+AUTOML
+H2O Driverless AI 
+If we dont need to explain what happens internally we can use ensemble techniques. 
+
+###################################################################################################################################################################################
+
+AI 
+|||||||||||||
+Rule Based AI => Rules are hardcoded/static, flawless 
+ML based AI   => Rules are dynamic, error based => We dont know rules but machine figure out/learns the rules.   
+
+LIME
+Shapley 
+Partial Dependancy plots 
+ICE plots 
+Feature Importance 
+
+NYC Taxi Fare Prediction use case 
+
+%%time => In Jupiter to calculate time it takes to run 
+Haversine distant to calculate distance between pickup and drop point. 
+pickup location (like from airport fare will be more) 
+
+Bollywood movie success prediction 
+HR attrition prediction 

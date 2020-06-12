@@ -1,0 +1,102 @@
+Support Vector Machines
+-------------------------
+
+Most powerful ML Algorithm. 
+Also called Maximum Margin Classifiers 
+Can be used for both classification and regression. 
+Popularly used in classification.
+
+Perceptron Learning Algorithm - 
+---------------------------------
+
+1) Draw the first random line.
+2) Modify the weights w and shift until classification is correct. 
+
+Limitations - 
+---------------
+There is no unique line => Various possible lines 
+Works perfectly well on training, but fails in production (Overfit) 
+Decision Boundary can be too close to red/blue 
+
+SVM 
+-----
+
+To overcome these limitations - 
+|   |   |    |     |
+Support Vector Machines and Multi layer Perceptron (Neural Network) 
+
+Instead of creating decision boundary too close to classes, SVM creates decision boundary right at the middle of the two nearest classes.
+This decision boundary/hyperplane drawn is such that distance between plane and blue/red classes is high. 
+Nearest class points to decision boundary are called support vectors and line between these support vectors is decision boundary. Width of these support vector is margin. 
+Margin needs to be maximised. 
+Margin is distance between nearest red and nearest blue point
+
+SVMs can create linear as well as nonlinear decision boundaries.
+SVM can create circle like decision boundaries also. 
+
+Distance of the point(x,y) from the line w1x1+w2x2+b=0 is D = |(w1x+w2y+b)|/(sqrt(w1^2+w2^2))
+Distance between parallel lines w1x1+w2x2+b1=0 and w1x1+w2x2+b2=0 is Dp=|b2-b1|/(sqrt(w1^2+w2^2))
+
+Maximising Margin 
+-------------------
+
+D (Margin) = 2/||w||
+
+Maximise D => Minimize (1/2)*||w||^2 given that yi(wXi+b) >= 1 (which means all points are correctly classified) (Here yi can be -1/+1 and Xi are points(x1,x2) whci can be above/below the decision boundary)
+
+Lagrangian Function combines two problems into one uncontrained problem => L(w,b,alpha) = (1/2)*||w||^2 - Sum(alphai(yi(wXi)+b - 1)) (Here i is from 1 to m points)
+We try to minimize wrt w,b and maximize wrt alpha  
+Wolfe Dual problem 
+Slater's condition says that the maximum of dual is equal to minimum of primal.=> I.e. both solutions will be the same (Strong dual case) 
+Point where minimum and maximum coincide. 
+
+Support Vector Regressor(SVR) 
+-------------------------------
+SVR(Support vector Regressor) => Non linear regressor => Here we try to minimize margin.
+
+Slack in SVM 
+----------------
+
+If data points are overlap like (few +ve points are around -ve points) we introduce Slack otherwise SVM will not be able to find solution. 
+Lineancy/Slack is introduce by C hyperparameter. => Slack variable allows data points to be on wrong side of the margins. 
+
+Hard margin problem => No data points can enter into margin. 
+Soft margin problem => In real world we should be ok for points to come inside margin. 
+
+Slack for data point is magnitude of the voilation from respective margins. 
+(Slack for data points on correct side of the margins is 0) 
+
+We try to minimize overall sum of slack across all data points.
+If data point is inside margin, then how far data point is from respective margin is slack. 
+
+C Hyperparmeter 
+-----------------
+C hyperparameter controls slack (C is cost of misclassification) 
+
+If C is very high => Margin is tight and less data points on margin.     => Less errors => Low Slack  => Hard Margin (More like perceptron) 
+If C is very low  => Margin will be high and more data points on margin. => More errors => High slack => Soft Margin 
+
+High C => Overfit  => High training score but more variance error 
+Low  C => Underfit => Increased bias error. 
+
+Cover's Theorem 
+-----------------
+If points are non linear in 2-D => We convert into 3-D and data points are linear in 3-D 
+For two circle data points => 3rd dimension is radius. 
+Inner cicle will have less radius and outer circle will have more radius. 
+
+Project data into higher dimension space, then we can seperate the data by linear surface. 
+This decision surface in higher dimension is plane but lower dimention is cicle seperating inner and outer circles. 
+
+Kernel
+--------
+kernel=linear
+kernel=rbf => Most popular 
+kernel=poly 
+
+rbf(Radial Basis Function)is mathematical function. 
+rbf is projects data into higher dimension and whatever linear surface is created is coverter back in 2-D. 
+
+Facial recognisation done using PCA and SVM. 
+
+In polynomialfeatures, degree becomes hyperparameter (too less degree => underfit, too high => overfit)

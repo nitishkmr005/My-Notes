@@ -1,0 +1,17 @@
+Pipeline Concept
+-----------------
+We need to tie together many different processes that we use to prepare data for machine learning based model.
+Pipeline is an object which makes things more efficient. 
+It is a class available in sklearn library. 
+Helps simplifying the chain of the transformation steps and the model.
+We use pipeline along with GridsearchCV and RandomsearchCV.
+Pipeline brings in standardisation. 
+
+Pipeline object requires all the stages included to have a transform() function except for the last step which is an estimator.
+Transform step transforms the input data and is input to next stage. 
+Pipeline does not need to have predict, it only needs to have fit function at least.
+
+Training => It applies fit and transform in every step => fit and transform, fit
+Testing  => It applies only transform in every step    => transform, predict 
+
+make_pipeline() => Here specifying name to each stage is not required => Name assigned to each stage is lowercase name of the function => For same names it assigns _1 and _2 at the end of names.

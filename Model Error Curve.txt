@@ -1,0 +1,60 @@
+Model Error Curve, Confusion Matrix 
+------------------------------------
+
+Different accuracy for different random state
+Train and test data have similar distribution and are balanced 
+Train and test are true representation of population 
+
+#####################################################################################################################
+
+										5 Fold Cross Validation 
+
+#####################################################################################################################
+Out of 5 folds one fold for validation and remaining for trainings
+
+100 => 80 Train and 20 Test 
+16*5=80 (5 folds with one for validation and other 4 for trainings)
+5 accuracies and take average of all 5 accuracies of the model, also standard deviation/variance of accuracies
+Average+-SD accuracy 
+
+#####################################################################################################################
+
+										Bias and Variance Error 
+
+#####################################################################################################################
+
+T=D/S => Underfit model (Biased model) => Max depth=1 => High Bias Error => Highly regularized model => Highly biased to feature 
+Bias Error = 1-accuracy 
+Underfit or simple models suffer from Bias error (Ex- T=D/S simple model since traffic, day not considered) => [1-average accuracy] gives bias error
+Overfit or complex models suffer from high variance error => Performs well in training but gives different accuracies(variance is high) after deployment => SD gives Variance error 
+Regression => Best fits the points and in classification => decision surface best separates the classes. 
+Overfit models will have high variance in accuracy in production. 
+Decision trees have high bias error and variance error. 
+
+Regularization  
+---------------
+Constraint/penalize models 
+This technique discourages learning a more complex or flexible model, so as to avoid the risk of overfitting.
+
+#####################################################################################################################
+
+										  Model Error Curve 
+
+#####################################################################################################################
+
+Shows underfit, overfit models 
+
+Underfit => Training and testing errors both are high    => Too much of feature selection, less features, no learning, simple model, more regulariztion, High Bais error and low variance error 
+Overfit  => Training error is low but test error is high => More features, Derived features(PCA, Polynomial features), complex model, n-neighbours=1, maximum leaf nodes/Max Depth, Less Regularization 
+Goodfit  => Optimal error for both training and test 
+
+#TextBook - Hands on Machine Learning with Scikit Learn and Tensorflow
+
+#Bedrooms, #Rooms => New feature (#Bedrooms/#Rooms => (Should be low)High correlation with target) 
+Bias Error inversely proportional to variance error 
+
+Bias Error => How accurate is model     
+Variance Error => How reliable is model 
+Ideally Low Bias error and low variance error for accuracy 
+
+#####################################################################################################################

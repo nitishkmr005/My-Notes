@@ -1,0 +1,39 @@
+Activation Functions
+---------------------
+
+- Sigmoid 
+Has Vanishing Gradient problem => differentiation is zero at higher values => Slow Convergence 
+If neurons are firing outside -4 to +4 => Slope is zero => We will not be able to update weights 
+
+- tanh(x) 
+To solve symmetric problem, Yan Lecun came up with tanh(x) ((e^x -e^-x)/(e^x +e^-x)) activation function 
+It still suffers from Vanishing Gradient problem 
+
+- Rectified Linear Unit Activation Function (ReLU) 
+Much better convergence 
+very efficient in computation 
+-ve => o/p is not necessarily zero centered and used with only hidden layers, dead neurons for -ve i/ps 0 i/p (no gradient=> No weights update)
+ReLU lets gradient pass wherever neurons are on. 
+
+- Leaky ReLU 
+To overcome the problem of dead neurons 
+f(x) = max(0.01x,x) 
+
+- Parametric Rectifier (PReLU)
+f(x) = max(ax,x) 
+
+- Exponential Linear Units (ELU ) 
+x        if x>0 
+a(e^x-1) if x<=0 
+-ve => Computation requires exp() 
+
+- Careful with learning rate + Monitor the fraction of dead units in network (possibly try Leaky ReLU) 
+
+- Softmax 
+We use softmax because cross entropy loss uses probabilities 
+
+Cross Entropy loss (Log Loss)
+-----------------------------
+With gradient descent, we try to reduce this loss for classification problem 
+Loss for binary class = aloga + (1-a)log(1-a) 
+Loss for multiclass = -yi*ln(softmax_prob) 

@@ -1,0 +1,107 @@
+Simple Linear Regression 
+--------------------------
+
+Linear Models always go through the point where Xbar and Ybar meet. 
+Residual (distance between predicted and actual point => SSE(Sum of squared error))
+Find a straight line that minimises Residual 
+
+Gradient Discent Algorithm 
+Learning rate a=0.0001
+
+y=mx+c
+change m and c by 0.0001 and see if SSE is reduced => Do until SSE reaches global minimum 
+
+Find m and c which has minimum SSE 
+
+Applied ML - i/p, o/p from algorithm
+Numerical Optimization - Math instesive algorithm 
+
+Adjusted R-Square 
+
+ucl machinelearning
+kaggle 
+Analytics Vidya
+Meetup
+Devpost.com
+
+R-Square 
+-----------
+
+Ranges between 0 and 1. Closer to 1 is better 
+
+R^2 = { SSE(Mean) - SSE(fit) }/ SSE(Mean) = (100-40)/100=60% of mouse weight is influencing mouse size 
+        
+SSE(Mean) => Distance of actual points from mean => Without feature 
+SSE(fit) => Distance of actual points from predicted => With feature 
+
+What is Mouse size for given mouse weight => if its zero but size will not be equal to 0 => Fails for 0 and -ve
+
+If R-square value is closer to 0 for particular feature => Drop the feature => Make coefficient of that feature as zero 
+
+Adjusted R-square
+--------------------
+Used inside algorithm to drop the column 
+
+10 features - R-Square of 0.84
+2 features - R-Square of 0.84 is better 
+
+How much R-squared is influeced by features => Adjusted R-Square
+R-square doesnt consider how many features we used 
+
+Individual features R-Square can be good but need to calculate R-Square by combining all features => but we cant use R-Square for combined features => Use Adjusted R-Square
+Compare models with multiple features 
+
+16 different Linear Regression 
+Ordinary least square Linear Regression
+
+Cardinal numbers, known as the “counting numbers,” indicate quantity. 
+Ordinal numbers indicate the order or rank of things in a set (e.g., sixth in line; fourth place). 
+Nominal numbers name or identify something (Ex - a zip code or a player on a team) 
+
+Adjusted R-Square = 1-(1-R^2)*(n-1/(n-k-1) 
+
+k => Number of features, n => Number of records 
+
+NULL => String NULL
+Nan  => Number null 
+
+RMSE = 0 for ideal prediction 
+
+When to apply normalization and standardisation ?
+Normalization usually means to scale a variable to have a values between 0 and 1, 
+Standardization transforms data to have a mean of zero and a standard deviation of 1.
+
+predicting range of values => It becomes classification 
+
+Learning Rate Annealing
+
+Regularization/Shrinkage method of Linear Model 
+--------------------------------------------------
+
+Depth vs Breadth analysis => Number of features or permutation of features can be more but number of records can be less
+Mathematical space is sparse or empty, its hard to find what kind of relationship exist between target and independant variable. 
+=> Best fit surface will be zig zag and coefficients will be high magnitude.
+=> This means Overfit model 
+Cost function = sum of squared difference between actual value and predicted value (SSE).
+
+Ridge Regression 
+------------------
+
+Linear Regression cost function + Labmda*Sum of squared coefficients (SSC/Regularizing term(=>Slopes)
+High coefficients means sharp peaks and valleys.
+Here we try to minimise SSE and sum of squared coefficients.
+To suppress the SSC, i.e. to prevent coefficients becoming large, penalty term(Lambda) is used. => This means not to have sharp peaks and valleys but give mathematical space as smooth surface. 
+
+If Lambda=0 => Linear Regression SSE
+If Lambda=too high => Underfit situation 
+
+Tries to push the coefficients towards zero. But will never make it to zero. 
+
+Lasso Regression
+------------------
+
+Linear Regression cost function + Labmda*Sum of Magnitude of coefficients.
+Many of the coefficients becomes zero and corresponding features will not be used.
+It is used as feature selection technique.
+
+Interaction_only=True => Take only those dimentions which shows correlation between themselves. 

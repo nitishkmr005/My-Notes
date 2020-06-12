@@ -1,0 +1,321 @@
+Computer vision Template 
+-------------------------
+
+pip install opencv-contrib-python 
+
+############################################################################################################################################################	
+
+											     	Google colab
+
+############################################################################################################################################################	
+
+https://medium.com/deep-learning-turkey/google-colab-free-gpu-tutorial-e113627b9f5d
+https://towardsdatascience.com/downloading-datasets-into-google-drive-via-google-colab-bcb1b30b0166
+https://github.com/Kaggle/kaggle-api
+
+1) Mounting google drive - 
+
+  from google.colab import drive
+  drive.mount('/content/drive/')
+
+2) Extracting zip file 
+
+  project_path = "/content/drive/My Drive/Computer Vision/DogBreed_Classification/"
+  
+  from zipfile import ZipFile
+  with ZipFile(project_path+'train.zip', 'r') as z:
+    z.extractall()
+
+3) To change the working directory - 
+
+  import os
+  os.chdir("drive/app")
+  !ls
+  
+4)To check if GPU working - 
+
+  import tensorflow as tf
+  tf.test.gpu_device_name()   
+
+5) Which GPU I am using -   #Tesla K80
+
+  from tensorflow.python.client import device_lib
+  device_lib.list_local_devices()
+
+6) RAM - 
+
+  !cat /proc/meminfo
+  
+7) CPU - 
+
+  !cat /proc/cpuinfo
+  
+8) To see function arguments in TensorFlow, Keras etc, simply add question mark (?) after function name:
+
+9) How to Send Large Files From Colab To Google Drive?
+
+  # Which file to send?
+  file_name = "REPO.tar"
+  
+  from googleapiclient.http import MediaFileUpload
+  from googleapiclient.discovery import build
+  
+  auth.authenticate_user()
+  drive_service = build('drive', 'v3')
+  
+  def save_file_to_drive(name, path):
+    file_metadata = {'name': name, 'mimeType': 'application/octet-stream'}
+    media = MediaFileUpload(path, mimetype='application/octet-stream', resumable=True)
+    created = drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+    
+    return created
+  
+  save_file_to_drive(file_name, file_name)
+  
+10) How to Run Tensorboard in Google Colab?
+
+  # You can change the directory name
+  LOG_DIR = 'tb_logs'
+  
+  !wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
+  !unzip ngrok-stable-linux-amd64.zip
+  
+  import os
+  if not os.path.exists(LOG_DIR):
+    os.makedirs(LOG_DIR)
+    
+  get_ipython().system_raw(
+      'tensorboard --logdir {} --host 0.0.0.0 --port 6006 &'
+      .format(LOG_DIR))
+  
+  get_ipython().system_raw('./ngrok http 6006 &')
+  
+  !curl -s http://localhost:4040/api/tunnels | python3 -c \
+      "import sys, json; print(json.load(sys.stdin)['tunnels'][0]['public_url'])"
+
+  # You can track your Tensorboard logs with created ngrok.io URL. You will find the URL at the end of output.
+  # Note that your Tensorboard logs will be save to tb_logs dir.
+
+11) Unzip -  
+
+   For dataset with multiple zip files like the example, I tend to change directory to the designated folder and unzip them one by one.
+   
+   !unzip -q file[.zip] -d [exdir]
+   -q suppress the printing of the file names being extracted
+   -d [exdir] optional directory to which to extract files
+
+   import os
+   os.chdir('gdrive/My Drive/kaggle/cancer')  #change dir
+   !mkdir train  #create a directory named train/
+   !mkdir test  #create a directory named test/
+   !unzip -q train.zip -d train/  #unzip data in train/
+   !unzip -q test.zip -d test/  #unzip data in test/
+   !unzip sample_submission.csv.zip
+   !unzip train_labels.csv.zip
+
+12) Unmount drive and mount again -  
+
+   Select Google Drive File Stream in the Google apps section, then select Remove access.
+   https://myaccount.google.com/permissions
+
+############################################################################################################################################################	
+
+											     	 Preparing Training datasets
+
+############################################################################################################################################################	
+
+from tqdm import tqdm
+import cv2
+x_features=[]
+y_features=[]
+
+1) Reading labels.csv file and building list of arrays for x and y 
+
+   for iid,lab in tqdm(labels.values):
+     train_img=cv2.imread('./train/{}.jpg'.format(iid),1)
+     train_img_resize=cv2.resize(train_img,(128,128))
+     x_features.append(train_img_resize)
+     y_features.append(lab)
+     
+   import matplotlib.pyplot as plt
+   plt.imshow(x_features[0])
+   y_features[0]
+   
+   x_features[0].shape,y_features[0]
+
+2) Label encoding and one hot encoding target variable 
+
+   from sklearn.preprocessing import LabelEncoder
+   le = LabelEncoder()
+   ytrain = le.fit_transform(y_features)
+   ytrain
+   
+   import tensorflow 
+   y_train_data = tensorflow.keras.utils.to_categorical(ytrain, 120)
+   
+   y_train_data.shape,y_train_data[0]
+
+3) Converting list of array into array 
+
+   import numpy  
+   xtrain_arr = numpy.array(x_features) 
+   xtrain_arr.shape,xtrain_arr[0].shape
+   
+4) Normalizing train data 
+
+   x_train_data = xtrain_arr.astype('float32')
+   
+   #Normalizing the input
+   x_train_data /= 255.0
+   print('x_train_data shape:', x_train_data.shape)
+   print(x_train_data.shape[0], 'train samples')
+
+############################################################################################################################################################	
+
+											     	  Transfer Learning    
+
+############################################################################################################################################################	
+   
+from tensorflow.keras.layers import Input, Lambda, Dense, Flatten
+from tensorflow.keras.models import Model
+from tensorflow.keras.applications.vgg16 import VGG16
+from tensorflow.keras.applications.vgg16 import preprocess_input
+from tensorflow.keras.preprocessing import image
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.models import Sequential
+import numpy as np
+from glob import glob
+import matplotlib.pyplot as plt
+
+# re-size all the images to this
+IMAGE_SIZE = [224, 224]
+
+train_path = 'Datasets/Train'
+valid_path = 'Datasets/Test'
+
+# add preprocessing layer to the front of VGG
+vgg = VGG16(input_shape=IMAGE_SIZE + [3], weights='imagenet', include_top=False)
+
+# don't train existing weights
+for layer in vgg.layers:
+  layer.trainable = False
+  
+# useful for getting number of classes
+folders = glob('Datasets/Train/*')  
+
+# our layers - you can add more if you want
+x = Flatten()(vgg.output)
+# x = Dense(1000, activation='relu')(x)
+prediction = Dense(len(folders), activation='softmax')(x)
+
+# create a model object
+model = Model(inputs=vgg.input, outputs=prediction)
+
+# view the structure of the model
+model.summary()
+
+# tell the model what cost and optimization method to use
+model.compile(
+  loss='categorical_crossentropy',
+  optimizer='adam',
+  metrics=['accuracy']
+)
+ 
+############################################################################################################################################################	
+
+											     	     Building Directory Structure for data augmentation 
+
+############################################################################################################################################################	
+
+df = labels.groupby('breed').agg({'id':['count']})
+df.head()
+
+classes = labels.breed.unique()
+classes
+
+from sklearn.model_selection import train_test_split
+train_labels , val_labels = train_test_split(labels, test_size = 0.2,random_state=5)
+
+train_classes = train_labels.breed.unique()
+val_classes = val_labels.breed.unique()
+train_classes.shape,val_classes.shape
+
+import os
+import shutil
+
+for subfolder in train_classes:
+  os.mkdir('./train/{}'.format(subfolder))
+
+for subfolder in val_classes:
+  os.mkdir('./val/{}'.format(subfolder))
+  
+for iid,lab in (train_labels.values):
+      shutil.move('./train/{}.jpg'.format(iid), './train/{}/'.format(lab)) 
+
+for iid,lab in (val_labels.values):
+      shutil.move('./train/{}.jpg'.format(iid), './val/{}/'.format(lab)) 
+	  
+from glob import glob
+train_folders = glob('./train/*')
+print(len(train_folders))
+
+from glob import glob
+val_folders = glob('./val/*')
+print(len(val_folders))
+
+############################################################################################################################################################	
+
+											     	  Data Augmentation 
+
+############################################################################################################################################################	
+
+from keras.preprocessing.image import ImageDataGenerator
+
+train_datagen = ImageDataGenerator(rescale = 1./255,
+                                   shear_range = 0.2,
+                                   zoom_range = 0.2,
+                                   horizontal_flip = True)
+
+test_datagen = ImageDataGenerator(rescale = 1./255)
+
+training_set = train_datagen.flow_from_directory('Datasets/Train',
+                                                 target_size = (224, 224),
+                                                 batch_size = 32,
+                                                 class_mode = 'categorical')
+
+test_set = test_datagen.flow_from_directory('Datasets/Test',
+                                            target_size = (224, 224),
+                                            batch_size = 32,
+                                            class_mode = 'categorical')
+
+'''r=model.fit_generator(training_set,
+                         samples_per_epoch = 8000,
+                         nb_epoch = 5,
+                         validation_data = test_set,
+                         nb_val_samples = 2000)'''
+
+# fit the model
+r = model.fit_generator(
+  training_set,
+  validation_data=test_set,
+  epochs=5,
+  steps_per_epoch=len(training_set),
+  validation_steps=len(test_set)
+)
+
+############################################################################################################################################################	
+
+																OpenCV 
+
+############################################################################################################################################################	
+
+import cv2 
+
+img = cv2.imread('img.jpg', 1)
+img_resize = cv2.resize(img, (128, 128)) 
+cv2.imshow('Title', img_resize) 
+
+cv2.waitKey()    # cv2.waitKey(0) waits 0seconds
+cv2.destroyAllWindows()
+
+cv2.imwrite('output.jpg',input)
